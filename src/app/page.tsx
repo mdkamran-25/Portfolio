@@ -1,4 +1,4 @@
-import Profile from "./components/ui/Profile";
+import Profile from "./components/ui/Profile.tsx";
 export default function Home() {
   return (
     <main>
