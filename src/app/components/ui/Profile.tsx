@@ -1,14 +1,7 @@
 "use client";
 import Image from "next/image";
 import { SiNotion } from "react-icons/si";
-import {
-  Dot,
-  Github,
-  Globe,
-  Languages,
-  BriefcaseBusiness,
-  GraduationCap,
-} from "lucide-react";
+import { Dot, Github, Globe, Languages, GraduationCap } from "lucide-react";
 
 const image = "/kamran.jpeg";
 
