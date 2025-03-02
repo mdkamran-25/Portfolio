@@ -21,7 +21,7 @@ export default function Profile() {
           <div className="relative h-16 w-16 overflow-hidden rounded-full sm:h-20 sm:w-20">
             <Image
               src={image}
-              alt={"Kamran's profile picture"}
+              alt="Kamran's profile picture"
               fill
               className="object-cover object-center"
               priority
