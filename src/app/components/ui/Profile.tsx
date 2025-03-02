@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { SiNotion } from "react-icons/si";
 import {
   Dot,
   Github,
@@ -74,9 +75,9 @@ export default function Profile() {
             url="https://github.com/mdkamran-25"
           />
           <Button
-            text="Hire Me"
-            icon={BriefcaseBusiness}
-            url="https://github.com/mdkamran-25"
+            text="Projects"
+            icon={SiNotion}
+            url="https://spring-mars-7c5.notion.site/React-Projects-1868ac9f1d858023a5ddf222dacf5051?pvs=74"
           />
         </div>
       </div>
