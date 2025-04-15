@@ -21,6 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, te
           height={450}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           priority
+          unoptimized
         />
         {/* Overlay with content */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/70 p-4 opacity-0 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:opacity-100">
@@ -65,7 +66,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, te
 export default function Projects() {
   const projects = [
     {
-      image: "/Project.png",
+      image: "/project.png",
       title: "Portfolio Website",
       description: "A modern portfolio website built with Next.js and Tailwind CSS",
       tech: ["Next.js", "React", "Tailwind CSS"],
