@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
-import Project from "../../../public/project.png";
+import Project from "../../../public/Project.png";
 import KrmagsLight from "../../../public/krmagsLight.png";
 import KrmagsDark from "../../../public/KrmagsDark.png";
 
