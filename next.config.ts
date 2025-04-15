@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     unoptimized: true,
+    disableStaticImages: true,
     remotePatterns: [
       {
         protocol: 'https',

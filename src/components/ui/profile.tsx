@@ -3,7 +3,6 @@ import { Globe } from "lucide-react";
 import { GraduationCap } from "lucide-react";
 import { Github } from "lucide-react";
 import { SiNotion } from "react-icons/si";
-import image from "../../../public/kamran.jpeg";
 
 export default function Profile() {
   return (
@@ -12,11 +11,11 @@ export default function Profile() {
       <div className="flex items-start gap-3 sm:gap-4">
         <div className="relative h-14 w-14 overflow-hidden rounded-2xl sm:h-16 sm:w-16">
           <Image
-            src={image}
+            src="/kamran.jpeg"
             alt="Kamran's profile picture"
             fill
-            sizes="(max-width: 768px) 56px, 64px"
-            className="object-cover"
+            sizes="(max-width: 640px) 56px, 64px"
+            className="h-full w-full object-cover"
             priority
           />
         </div>
