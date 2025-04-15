@@ -10,9 +10,10 @@ interface ProjectCardProps {
   description: string;
   tech: string[];
   link: string;
+  demoLink: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, tech, link }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, tech, link, demoLink }) => {
   return (
     <div className="group relative aspect-video overflow-hidden rounded-xl bg-neutral-800/50">
       <div className="relative h-full w-full">
@@ -37,14 +38,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, te
                 </span>
               ))}
             </div>
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-full bg-neutral-700/50 px-4 py-1 text-sm text-white transition-colors hover:bg-neutral-600/50"
-            >
-              View Project
-            </a>
+            <div className="flex justify-center gap-2">
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full bg-neutral-700/50 px-4 py-1 text-sm text-white transition-colors hover:bg-neutral-600/50"
+              >
+                Source Code
+              </a>
+              <a
+                href={demoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full bg-neutral-700/50 px-4 py-1 text-sm text-white transition-colors hover:bg-neutral-600/50"
+              >
+                Live Demo
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -59,21 +70,24 @@ export default function Projects() {
       title: "Portfolio Website",
       description: "A modern portfolio website built with Next.js and Tailwind CSS",
       tech: ["Next.js", "React", "Tailwind CSS"],
-      link: "https://github.com/yourusername/project1"
+      link: "https://github.com/mdkamran-25/Portfolio",
+      demoLink: "https://portfolio-gilt-kappa-73.vercel.app/"
     },
     {
       image: KrmagsLight,
       title: "E-commerce Platform",
       description: "Full-featured e-commerce platform with cart and checkout functionality",
       tech: ["React", "Node.js", "MongoDB"],
-      link: "https://github.com/yourusername/project2"
+      link: "https://github.com/mdkamran-25/krmagsPage",
+      demoLink: "https://krmags.com"
     },
     {
       image: KrmagsDark,
       title: "Task Management App",
       description: "Collaborative task management application with real-time updates",
       tech: ["TypeScript", "Firebase", "Material-UI"],
-      link: "https://github.com/yourusername/project3"
+      link: "https://github.com/yourusername/project3",
+      demoLink: "https://your-taskapp-url.com"
     }
   ];
 
@@ -91,7 +105,7 @@ export default function Projects() {
 
       <div className="flex justify-center">
         <a
-          href="https://github.com/yourusername"
+          href="https://spring-mars-7c5.notion.site/Welcome-1868ac9f1d858023a5ddf222dacf5051"
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
