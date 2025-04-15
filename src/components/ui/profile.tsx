@@ -13,10 +13,11 @@ export default function Profile() {
           <Image
             src="/kamran.jpeg"
             alt="Kamran's profile picture"
-            fill
-            sizes="(max-width: 640px) 56px, 64px"
+            width={64}
+            height={64}
             className="h-full w-full object-cover"
             priority
+            unoptimized
           />
         </div>
         <div className="flex flex-col">

@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     unoptimized: true,
-    disableStaticImages: true,
+    domains: ['localhost', 'vercel.app'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -17,6 +17,21 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*.vue.map',
         destination: '/_not-found',
+      },
+    ];
+  },
+  // Ensure static files are handled correctly
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|jpg|png|jpeg)',
+        locale: false,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
       },
     ];
   },
