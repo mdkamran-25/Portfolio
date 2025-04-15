@@ -1,11 +1,8 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import React from "react";
-import Project from "../../../public/project.png";
-import KrmagsLight from "../../../public/krmagsLight.png";
-import KrmagsDark from "../../../public/KrmagsDark.png";
 
 interface ProjectCardProps {
-  image: StaticImageData;
+  image: string;
   title: string;
   description: string;
   tech: string[];
@@ -20,6 +17,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, te
         <Image 
           src={image} 
           alt={title} 
+          width={800}
+          height={450}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           priority
         />
@@ -66,7 +65,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ image, title, description, te
 export default function Projects() {
   const projects = [
     {
-      image: Project,
+      image: "/Project.png",
       title: "Portfolio Website",
       description: "A modern portfolio website built with Next.js and Tailwind CSS",
       tech: ["Next.js", "React", "Tailwind CSS"],
@@ -74,7 +73,7 @@ export default function Projects() {
       demoLink: "https://portfolio-gilt-kappa-73.vercel.app/"
     },
     {
-      image: KrmagsLight,
+      image: "/krmagsLight.png",
       title: "E-commerce Platform",
       description: "Full-featured e-commerce platform with cart and checkout functionality",
       tech: ["React", "Node.js", "MongoDB"],
@@ -82,7 +81,7 @@ export default function Projects() {
       demoLink: "https://krmags.com"
     },
     {
-      image: KrmagsDark,
+      image: "/KrmagsDark.png",
       title: "Task Management App",
       description: "Collaborative task management application with real-time updates",
       tech: ["TypeScript", "Firebase", "Material-UI"],
