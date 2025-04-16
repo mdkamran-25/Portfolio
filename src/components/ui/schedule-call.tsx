@@ -8,9 +8,9 @@ export default function ScheduleCall() {
       {/* Schedule Call Button */}
       <button
         onClick={() => setShowCalendar(true)}
-        className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-2 text-sm text-white transition-colors hover:bg-neutral-700/50 sm:bottom-6 sm:right-6 sm:px-6 sm:py-3 md:bottom-8 md:right-8"
+        className="fixed top-4 right-4 z-50 flex items-center gap-2 rounded-full bg-neutral-800/50 px-2.5 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:top-4 sm:right-4 sm:px-4 sm:py-2"
       >
-        <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
+        <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
           <span className="relative inline-flex h-full w-full rounded-full bg-green-500"></span>
         </span>
