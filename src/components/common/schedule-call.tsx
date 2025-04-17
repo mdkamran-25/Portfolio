@@ -1,11 +1,13 @@
-import React from "react";
+'use client';
+
+import * as React from 'react';
 import { useState } from 'react';
 
 export default function ScheduleCall() {
   const [showCalendar, setShowCalendar] = useState(false);
 
   return (
-    <>
+    <React.Fragment>
       {/* Schedule Call Button */}
       <button
         onClick={() => setShowCalendar(true)}
@@ -39,6 +41,6 @@ export default function ScheduleCall() {
           </div>
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 } 

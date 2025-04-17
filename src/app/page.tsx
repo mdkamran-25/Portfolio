@@ -1,12 +1,13 @@
 "use client";
-import Profile from "@/components/ui/profile";
-import Projects from "@/components/ui/projects";
-import Stack from "@/components/ui/stack";
-import ScheduleCall from "@/components/ui/schedule-call";
+import Profile from "@/components/sections/profile";
+import Projects from "@/components/sections/projects";
+import FreelanceProjects from "@/components/sections/freelance-projects";
+import Stack from "@/components/sections/stack";
+import MainLayout from "@/components/layout/MainLayout";
 
 export default function Home() {
   return (
-    <main className="min-h-screen w-full bg-black px-4 py-6 sm:p-6 md:p-8 lg:p-16">
+    <MainLayout>
       <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
         {/* First row: Profile and Stack side by side */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
@@ -20,12 +21,12 @@ export default function Home() {
 
         {/* Second row: Projects */}
         <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
-          <Projects />
+          <FreelanceProjects theme="default" title="$ Freelance" />
+        </div>
+        <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+          <Projects theme="alternative" title="Featured Projects ..." />
         </div>
       </div>
-
-      {/* Schedule Call Component */}
-      <ScheduleCall />
-    </main>
+    </MainLayout>
   );
 }
