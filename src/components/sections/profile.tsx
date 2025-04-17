@@ -1,7 +1,7 @@
+'use client';
+
 import Image from "next/image";
-import { Globe } from "lucide-react";
-import { GraduationCap } from "lucide-react";
-import { Github } from "lucide-react";
+import { Globe, GraduationCap, Github } from "lucide-react";
 import { SiNotion } from "react-icons/si";
 
 export default function Profile() {
@@ -27,7 +27,7 @@ export default function Profile() {
               Available to Work
             </span>
           </div>
-          <p className="text-xs text-neutral-400 sm:text-sm">Front End Engineer</p>
+          <p className="text-xs text-neutral-400 sm:text-sm">Fullstack Developer</p>
         </div>
       </div>
 
