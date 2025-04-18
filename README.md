@@ -19,7 +19,7 @@ Welcome to the GitHub repository for my personal portfolio website! I'm **Matanu
 
 ## 🌐 Live Preview
 
-🔗 [Click here to view my live portfolio](https://your-portfolio-link.com)  
+🔗 [Click here to view my live portfolio](https://mdkamran.vercel.app/)  
 _(Replace with your actual deployment URL)_
 
 ## 🧩 Features
