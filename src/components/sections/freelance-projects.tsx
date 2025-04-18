@@ -236,7 +236,7 @@ export default function FreelanceProjects({
       </div>
 
       {/* View All Projects Link */}
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <a
           href="https://spring-mars-7c5.notion.site/Welcome-1868ac9f1d858023a5ddf222dacf5051"
           target="_blank"
@@ -245,7 +245,7 @@ export default function FreelanceProjects({
         >
           View All Projects
         </a>
-      </div>
+      </div> */}
     </div>
   );
 } 
