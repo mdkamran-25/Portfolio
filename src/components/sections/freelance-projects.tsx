@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
 
+// Project Card Component
 interface ProjectCardProps {
   project: FreelanceProject;
   theme?: ThemeType;
@@ -31,11 +32,16 @@ function ProjectCard({
           priority
           unoptimized
         />
+        
         {/* Overlay with content */}
         <div className={`absolute inset-0 flex items-center justify-center ${overlayColor} p-2 sm:p-4 opacity-0 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:opacity-100`}>
           <div className="space-y-2 sm:space-y-3 text-center max-h-full overflow-y-auto">
-            <h3 className={`text-base sm:text-lg font-semibold text-white ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}>{project.title}</h3>
-            <p className={`text-xs sm:text-sm text-neutral-300 ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}>{project.description}</p>
+            <h3 className={`text-base sm:text-lg font-semibold text-white ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}>
+              {project.title}
+            </h3>
+            <p className={`text-xs sm:text-sm text-neutral-300 ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}>
+              {project.description}
+            </p>
             <div className="flex flex-wrap justify-center gap-1 sm:gap-2">
               {project.tech.map((item, index) => (
                 <span 
@@ -53,6 +59,7 @@ function ProjectCard({
   );
 }
 
+// Project Details Component
 interface FreelanceProjectDetailsProps {
   project: FreelanceProject;
   theme?: ThemeType;
@@ -76,22 +83,39 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
 
   return (
     <div className={`h-full rounded-xl ${bgColor} p-4 sm:p-6`}>
+      {/* Project Title and Description */}
       <div className="mb-4">
-        <h2 className={`text-xl font-bold ${titleColor} mb-2`}>{project.title}</h2>
-        <p className="text-neutral-300">{project.description}</p>
+        <h2 className={`text-xl font-bold ${titleColor} mb-2`}>
+          {project.title}
+        </h2>
+        <p className="text-neutral-300">
+          {project.description}
+        </p>
       </div>
 
+      {/* Client Details */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">Client Details</h3>
+        <h3 className="text-lg font-semibold text-white mb-2">
+          Client Details
+        </h3>
         <div className="space-y-2">
-          <p className="text-neutral-300"><span className="font-medium">Client:</span> {project.client}</p>
-          <p className="text-neutral-300"><span className="font-medium">Role:</span> {project.role}</p>
-          <p className="text-neutral-300"><span className="font-medium">Duration:</span> {project.duration}</p>
+          <p className="text-neutral-300">
+            <span className="font-medium">Client:</span> {project.client}
+          </p>
+          <p className="text-neutral-300">
+            <span className="font-medium">Role:</span> {project.role}
+          </p>
+          <p className="text-neutral-300">
+            <span className="font-medium">Duration:</span> {project.duration}
+          </p>
         </div>
       </div>
 
+      {/* Tech Stack */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">Tech Stack</h3>
+        <h3 className="text-lg font-semibold text-white mb-2">
+          Tech Stack
+        </h3>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((item, index) => (
             <span 
@@ -104,8 +128,8 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
         </div>
       </div>
 
+      {/* Project Links */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">Project Links</h3>
         <div className="flex flex-col gap-2">
           <a
             href={project.demoLink}
@@ -118,27 +142,39 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
         </div>
       </div>
 
+      {/* Client Review */}
       <div className={`border-t ${borderColor} pt-4`}>
-        <h3 className="text-lg font-semibold text-white mb-2">Client Review</h3>
+        <h3 className="text-lg font-semibold text-white mb-2">
+          Client Review
+        </h3>
         {project.review ? (
           <div className="space-y-3">
             <div className="flex items-center gap-1">
               {renderStars(project.review.rating)}
             </div>
-            <p className="text-neutral-300 italic">"{project.review.comment}"</p>
+            <p className="text-neutral-300 italic">
+              "{project.review.comment}"
+            </p>
             <div className="text-sm text-neutral-400">
-              <p className="font-medium text-white">{project.review.reviewer}</p>
-              <p>{project.review.position}</p>
+              <p className="font-medium text-white">
+                {project.review.reviewer}
+              </p>
+              <p>
+                {project.review.position}
+              </p>
             </div>
           </div>
         ) : (
-          <p className="text-neutral-400">No review available for this project.</p>
+          <p className="text-neutral-400">
+            No review available for this project.
+          </p>
         )}
       </div>
     </div>
   );
 };
 
+// Main Freelance Projects Component
 interface FreelanceProjectsProps {
   title?: string;
   theme?: ThemeType;
@@ -156,10 +192,12 @@ export default function FreelanceProjects({
 
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
+      {/* Section Title */}
       <h1 className={`text-xl font-bold ${titleColor} sm:text-2xl`}>
         {title}
       </h1>
 
+      {/* Projects Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Project Selection */}
         <div className="lg:col-span-1">
@@ -184,6 +222,7 @@ export default function FreelanceProjects({
         </div>
       </div>
 
+      {/* View All Projects Link */}
       <div className="flex justify-center">
         <a
           href="https://spring-mars-7c5.notion.site/Welcome-1868ac9f1d858023a5ddf222dacf5051"
