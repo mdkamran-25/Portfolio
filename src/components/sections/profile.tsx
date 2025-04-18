@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import { Globe, GraduationCap, Github } from "lucide-react";
+import {  Globe, GraduationCap, Github, BrainCircuit, FileUser } from "lucide-react";
 import { SiNotion } from "react-icons/si";
 
 // Profile Component
@@ -49,7 +49,7 @@ export default function Profile() {
         </div>
         
         <div className="flex flex-wrap items-center gap-2 rounded-full bg-neutral-800/50 px-3 py-1.5">
-          <GraduationCap className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" />
+          <BrainCircuit className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" />
           <span className="text-xs text-neutral-400 sm:text-sm">
             Computer Science, 3rd year
           </span>
@@ -91,7 +91,27 @@ export default function Profile() {
           className="flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
         >
           <SiNotion className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> 
-          Hire me
+          Projects...
+        </button>
+        <button
+          onClick={() => {
+            // Create a link element
+            const link = document.createElement('a');
+            // Set the href to the PDF file
+            link.href = '/FullStackresume.pdf';
+            // Set the download attribute to force download
+            link.download = 'FullStackresume.pdf';
+            // Append the link to the body
+            document.body.appendChild(link);
+            // Trigger the download
+            link.click();
+            // Remove the link from the body
+            document.body.removeChild(link);
+          }}
+          className="flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
+        >
+          <FileUser className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> 
+          Download CV
         </button>
       </div>
     </div>
