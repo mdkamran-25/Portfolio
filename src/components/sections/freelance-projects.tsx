@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
+import DonationModal from "@/components/DonationModal";
 
 // Project Card Component
 interface ProjectCardProps {
@@ -15,11 +16,11 @@ function ProjectCard({
   theme = 'default',
   onClick
 }: ProjectCardProps) {
-  const { bgColor, overlayColor, tagBgColor } = getThemeColors(theme);
+  const { bgColor } = getThemeColors(theme);
 
   return (
     <div 
-      className={`group relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer transition-all duration-300 p-1`}
+      className={`relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer transition-all duration-300 p-1`}
       onClick={onClick}
     >
       <div className="relative h-full w-full rounded-lg overflow-hidden">
@@ -28,32 +29,10 @@ function ProjectCard({
           alt={project.title} 
           width={800}
           height={450}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover"
           priority
           unoptimized
         />
-        
-        {/* Overlay with content */}
-        <div className={`absolute inset-0 flex items-center justify-center ${overlayColor} p-2 sm:p-4 opacity-0 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:opacity-100`}>
-          <div className="space-y-2 sm:space-y-3 text-center max-h-full overflow-y-auto">
-            <h3 className={`text-base sm:text-lg font-semibold text-white ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}>
-              {project.title}
-            </h3>
-            <p className={`text-xs sm:text-sm text-neutral-300 ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}>
-              {project.description}
-            </p>
-            <div className="flex flex-wrap justify-center gap-1 sm:gap-2">
-              {project.tech.map((item, index) => (
-                <span 
-                  key={index}
-                  className={`rounded-full ${tagBgColor} px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs text-neutral-300 ${project.title === "Task Management App" ? "group-hover:text-white" : "group-hover:text-black"}`}
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -66,7 +45,8 @@ interface FreelanceProjectDetailsProps {
 }
 
 const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ project, theme = 'default' }) => {
-  const { bgColor, tagBgColor, buttonBgColor, titleColor, borderColor } = getThemeColors(theme);
+  const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
@@ -170,6 +150,39 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
           </p>
         )}
       </div>
+
+      {/* Support Developer Button */}
+      <div className="mt-6">
+        <button
+          onClick={() => setIsDonationModalOpen(true)}
+          className="w-full rounded-full bg-amber-600 hover:bg-amber-700 px-4 py-2 text-sm text-white transition-colors text-center flex items-center justify-center gap-2"
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+          Support Developer
+        </button>
+      </div>
+
+      {/* Donation Modal */}
+      <DonationModal 
+        isOpen={isDonationModalOpen} 
+        onClose={() => setIsDonationModalOpen(false)} 
+      />
     </div>
   );
 };
