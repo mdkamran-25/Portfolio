@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
+import DonationModal from "@/components/DonationModal";
 
 // Project Card Component
 interface ProjectCardProps {
@@ -17,11 +18,11 @@ function ProjectCard({
   theme = 'default',
   onClick
 }: ProjectCardProps) {
-  const { bgColor, overlayColor, tagBgColor } = getThemeColors(theme);
+  const { bgColor } = getThemeColors(theme);
 
   return (
     <div 
-      className={`group relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer transition-all duration-300 p-1`}
+      className={`relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer transition-all duration-300 p-1`}
       onClick={onClick}
     >
       <div className="relative h-full w-full rounded-lg overflow-hidden">
@@ -30,32 +31,10 @@ function ProjectCard({
           alt={project.title} 
           width={800}
           height={450}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover"
           priority
           unoptimized
         />
-        
-        {/* Overlay with content */}
-        <div className={`absolute inset-0 flex items-center justify-center ${overlayColor} p-2 sm:p-4 opacity-0 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:opacity-100`}>
-          <div className="space-y-2 sm:space-y-3 text-center max-h-full overflow-y-auto">
-            <h3 className="text-base sm:text-lg font-semibold text-white">
-              {project.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-neutral-300">
-              {project.description}
-            </p>
-            <div className="flex flex-wrap justify-center gap-1 sm:gap-2">
-              {project.tech.map((item, index) => (
-                <span 
-                  key={index}
-                  className={`rounded-full ${tagBgColor} px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs text-neutral-300`}
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -70,6 +49,7 @@ interface ProjectDetailsProps {
 function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
   const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
   const coffeeButtonColor = 'bg-amber-600 hover:bg-amber-700';
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
 
   return (
     <div className={`h-full rounded-xl ${bgColor} p-4 sm:p-6`}>
@@ -139,10 +119,8 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
           >
             Use This Source Code For Free
           </a>
-          <a
-            href="https://www.buymeacoffee.com/mdkamran"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setIsDonationModalOpen(true)}
             className={`inline-block rounded-full ${coffeeButtonColor} px-4 py-2 text-sm text-white transition-colors text-center flex items-center justify-center gap-2`}
           >
             <svg 
@@ -163,9 +141,15 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
               <line x1="14" y1="1" x2="14" y2="4"></line>
             </svg>
             Buy Me A Coffee
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* Donation Modal */}
+      <DonationModal 
+        isOpen={isDonationModalOpen} 
+        onClose={() => setIsDonationModalOpen(false)} 
+      />
     </div>
   );
 }
