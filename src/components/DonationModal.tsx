@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Copy, Check, Smartphone, ArrowRight, QrCode, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { X, Copy, Check, Smartphone, MessageSquare, CheckCircle2 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 interface DonationModalProps {
@@ -13,26 +13,62 @@ const UPI_APPS = [
   { 
     name: 'Google Pay', 
     scheme: 'gpay',
-    url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+    url: (upiId: string, name: string, amount: number, message?: string) => {
+      const params = new URLSearchParams();
+      params.append('pa', upiId);
+      params.append('pn', name);
+      params.append('am', amount.toString());
+      params.append('cu', 'INR');
+      params.append('tn', message || 'Support My Work');
+      params.append('mc', '0000');
+      params.append('tr', `TR${Date.now()}`);
+      return `upi://pay?${params.toString()}`;
+    }
   },
   { 
     name: 'PhonePe', 
     scheme: 'phonepe',
-    url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+    url: (upiId: string, name: string, amount: number, message?: string) => {
+      const params = new URLSearchParams();
+      params.append('pa', upiId);
+      params.append('pn', name);
+      params.append('am', amount.toString());
+      params.append('cu', 'INR');
+      params.append('tn', message || 'Support My Work');
+      params.append('mc', '0000');
+      params.append('tr', `TR${Date.now()}`);
+      return `upi://pay?${params.toString()}`;
+    }
   },
   { 
     name: 'Paytm', 
     scheme: 'paytm',
-    url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+    url: (upiId: string, name: string, amount: number, message?: string) => {
+      const params = new URLSearchParams();
+      params.append('pa', upiId);
+      params.append('pn', name);
+      params.append('am', amount.toString());
+      params.append('cu', 'INR');
+      params.append('tn', message || 'Support My Work');
+      params.append('mc', '0000');
+      params.append('tr', `TR${Date.now()}`);
+      return `upi://pay?${params.toString()}`;
+    }
   },
   { 
     name: 'Amazon Pay', 
     scheme: 'amazon',
-    url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+    url: (upiId: string, name: string, amount: number, message?: string) => {
+      const params = new URLSearchParams();
+      params.append('pa', upiId);
+      params.append('pn', name);
+      params.append('am', amount.toString());
+      params.append('cu', 'INR');
+      params.append('tn', message || 'Support My Work');
+      params.append('mc', '0000');
+      params.append('tr', `TR${Date.now()}`);
+      return `upi://pay?${params.toString()}`;
+    }
   }
 ];
 
@@ -49,7 +85,6 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
   const [isCustom, setIsCustom] = useState(false);
   const [copied, setCopied] = useState(false);
   const [selectedApp, setSelectedApp] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const [message, setMessage] = useState<string>('');
   const UPI_ID = 'keykamran7366@ybl';
   const RECIPIENT_NAME = 'Kamran';
@@ -59,14 +94,27 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [paymentId, setPaymentId] = useState<string | null>(null);
   const [isCheckingPayment, setIsCheckingPayment] = useState(false);
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [paymentWindow, setPaymentWindow] = useState<Window | null>(null);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    const checkDeviceType = () => {
+      const userAgent = navigator.userAgent;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      const isTablet = /iPad|Android/i.test(userAgent) && !/Mobile/i.test(userAgent);
+      
+      if (isMobile) {
+        setDeviceType('mobile');
+      } else if (isTablet) {
+        setDeviceType('tablet');
+      } else {
+        setDeviceType('desktop');
+      }
     };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+
+    checkDeviceType();
+    window.addEventListener('resize', checkDeviceType);
+    return () => window.removeEventListener('resize', checkDeviceType);
   }, []);
 
   useEffect(() => {
@@ -150,24 +198,70 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     if (amount && amount > 0 && selectedApp) {
       const app = UPI_APPS.find(a => a.scheme === selectedApp);
       if (app) {
-        // Generate a unique payment ID
-        const newPaymentId = `payment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        setPaymentId(newPaymentId);
-        setIsCheckingPayment(true);
-        
-        const paymentUrl = app.url(UPI_ID, RECIPIENT_NAME, amount, message);
-        window.location.href = paymentUrl;
-        setShowConfirmButton(true);
+        try {
+          const transactionId = `TR${Date.now()}`;
+          setPaymentId(transactionId);
+          const paymentUrl = app.url(UPI_ID, RECIPIENT_NAME, amount, message);
+          
+          // Try to open payment in a new window
+          const newWindow = window.open('', '_blank');
+          if (newWindow) {
+            setPaymentWindow(newWindow);
+            newWindow.location.href = paymentUrl;
+            
+            // Check if window is closed (payment completed or failed)
+            const checkWindow = setInterval(() => {
+              if (newWindow.closed) {
+                clearInterval(checkWindow);
+                setPaymentWindow(null);
+                setIsCheckingPayment(true);
+                // Start payment verification with the transaction ID
+                verifyPayment(transactionId);
+              }
+            }, 1000);
+          } else {
+            // If popup is blocked, try direct navigation
+            window.location.href = paymentUrl;
+            
+            // Add fallback for UPI app not installed
+            setTimeout(() => {
+              if (!document.hidden) {
+                alert('No UPI app found. Please install a UPI payment app or try scanning the QR code.');
+              }
+            }, 2000);
+          }
+          
+          setShowConfirmButton(true);
+        } catch (error) {
+          console.error('Error generating payment URL:', error);
+          alert('Error initiating payment. Please try again or use the QR code.');
+        }
       }
     }
   };
 
+  // Add cleanup for payment window
+  useEffect(() => {
+    return () => {
+      if (paymentWindow && !paymentWindow.closed) {
+        paymentWindow.close();
+      }
+    };
+  }, [paymentWindow]);
+
   const getUPIString = () => {
     const amount = isCustom ? parseInt(customAmount) : selectedAmount;
+    const params = new URLSearchParams();
+    params.append('pa', UPI_ID);
+    params.append('pn', RECIPIENT_NAME);
     if (amount && amount > 0) {
-      return `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(RECIPIENT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`;
+      params.append('am', amount.toString());
     }
-    return `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(RECIPIENT_NAME)}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`;
+    params.append('cu', 'INR');
+    params.append('tn', message || 'Support My Work');
+    params.append('mc', '0000');
+    params.append('tr', `TR${Date.now()}`);
+    return `upi://pay?${params.toString()}`;
   };
 
   if (!isOpen) return null;
@@ -317,7 +411,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </div>
 
-                {isMobile ? (
+                {(deviceType === 'mobile' || deviceType === 'tablet') && (
                   <div className="mt-4 sm:mt-6">
                     <h3 className="mb-2 text-sm font-semibold text-neutral-300 sm:mb-3">Select Payment App</h3>
                     <div className="grid grid-cols-2 gap-2 sm:gap-3">
@@ -337,40 +431,52 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                       ))}
                     </div>
                   </div>
-                ) : (
+                )}
+
+                {(deviceType === 'desktop' || deviceType === 'tablet') && (selectedAmount || isCustom) && (
                   <div className="mt-4 sm:mt-6">
                     <h3 className="mb-2 text-sm font-semibold text-neutral-300 sm:mb-3">Scan QR Code to Pay</h3>
                     <div className="flex flex-col items-center space-y-3 sm:space-y-4">
                       <div className="rounded-lg border border-neutral-700 p-3 bg-white sm:p-4">
                         <QRCodeSVG
                           value={getUPIString()}
-                          size={160}
+                          size={deviceType === 'tablet' ? 200 : 160}
                           level="H"
                           includeMargin={true}
                         />
                       </div>
                       <p className="text-center text-xs text-neutral-400 sm:text-sm">
-                        Scan this QR code with any UPI app on your phone to make the payment
+                        {deviceType === 'tablet' 
+                          ? 'You can either scan this QR code or select a payment app above'
+                          : 'Scan this QR code with any UPI app on your phone to make the payment'}
                       </p>
                       {showConfirmButton && (
                         <button
                           onClick={handleProceedToPay}
                           className="mt-4 rounded-lg bg-orange-500 px-6 py-2 text-sm text-white transition-colors hover:bg-orange-600"
                         >
-                          I've Completed the Payment
+                          Completed the Payment
                         </button>
                       )}
                     </div>
                   </div>
                 )}
+
+                {deviceType === 'tablet' && (
+                  <div className="mt-4 text-center">
+                    <p className="text-sm text-neutral-400">
+                      Choose your preferred payment method above
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {isMobile && showConfirmButton && (
+              {(deviceType === 'mobile' || deviceType === 'tablet') && showConfirmButton && (
                 <button
                   onClick={handleProceedToPay}
                   className="mt-4 w-full rounded-lg bg-orange-500 px-6 py-2 text-sm text-white transition-colors hover:bg-orange-600"
                 >
-                  I've Completed the Payment
+                  Completed the Payment
                 </button>
               )}
 
@@ -378,21 +484,42 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                 <div className="mt-4 text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
                   <p className="mt-2 text-sm text-neutral-400">Verifying payment status...</p>
+                  <button
+                    onClick={() => {
+                      setIsCheckingPayment(false);
+                      setPaymentStatus('pending');
+                    }}
+                    className="mt-2 text-sm text-orange-500 hover:text-orange-600"
+                  >
+                    Cancel Verification
+                  </button>
                 </div>
               )}
 
               {paymentStatus === 'failed' && (
                 <div className="mt-4 text-center">
                   <p className="text-red-500">Payment verification failed. Please try again.</p>
-                  <button
-                    onClick={() => {
-                      setPaymentStatus('pending');
-                      setIsCheckingPayment(false);
-                    }}
-                    className="mt-2 text-sm text-orange-500 hover:text-orange-600"
-                  >
-                    Retry
-                  </button>
+                  <div className="mt-2 space-x-2">
+                    <button
+                      onClick={() => {
+                        setPaymentStatus('pending');
+                        setIsCheckingPayment(false);
+                      }}
+                      className="text-sm text-orange-500 hover:text-orange-600"
+                    >
+                      Retry Payment
+                    </button>
+                    <button
+                      onClick={() => {
+                        setPaymentStatus('pending');
+                        setIsCheckingPayment(false);
+                        setSelectedApp(null);
+                      }}
+                      className="text-sm text-neutral-400 hover:text-neutral-300"
+                    >
+                      Try Different App
+                    </button>
+                  </div>
                 </div>
               )}
             </>
