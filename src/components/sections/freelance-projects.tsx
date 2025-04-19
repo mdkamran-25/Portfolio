@@ -2,7 +2,14 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
-import DonationModal from "@/components/DonationModal";
+import { RazorpayPayment } from '@/components/RazorpayPayment';
+import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
+
+const PREDEFINED_AMOUNTS = [
+  { amount: 99, label: 'Basic Support' },
+  { amount: 199, label: 'Premium Support' },
+  { amount: 999, label: 'Enterprise Support' },
+] as const;
 
 // Project Card Component
 interface ProjectCardProps {
@@ -46,7 +53,8 @@ interface FreelanceProjectDetailsProps {
 
 const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ project, theme = 'default' }) => {
   const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedAmount, setSelectedAmount] = useState(99);
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
@@ -59,6 +67,15 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
       </svg>
     ));
+  };
+
+  const handlePaymentSuccess = (response: RazorpayResponse) => {
+    console.log('Payment successful:', response);
+    setIsPaymentModalOpen(false);
+  };
+
+  const handlePaymentError = (error: RazorpayError) => {
+    console.error('Payment failed:', error);
   };
 
   return (
@@ -153,35 +170,69 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
 
       {/* Support Developer Button */}
       <div className="mt-6">
-        <button
-          onClick={() => setIsDonationModalOpen(true)}
-          className="w-full rounded-full bg-amber-600 hover:bg-amber-700 px-4 py-2 text-sm text-white transition-colors text-center flex items-center justify-center gap-2"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="16" 
-            height="16" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {PREDEFINED_AMOUNTS.map((option) => (
+            <button
+              key={option.amount}
+              onClick={() => {
+                setSelectedAmount(option.amount);
+                setIsPaymentModalOpen(true);
+              }}
+              className={`p-4 rounded-lg border transition-all ${
+                selectedAmount === option.amount
+                  ? 'border-orange-500 bg-orange-50 text-orange-600'
+                  : 'border-gray-200 hover:border-orange-300'
+              }`}
+            >
+              <div className="font-semibold">₹{option.amount}</div>
+              <div className="text-xs text-gray-500">{option.label}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Custom Amount */}
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <input
+            type="number"
+            min="1"
+            placeholder="Enter custom amount"
+            className="w-full p-3 rounded-lg border border-gray-200 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-black"
+            onChange={(e) => setSelectedAmount(parseInt(e.target.value) || 0)}
+          />
+          <button
+            onClick={() => selectedAmount >= 1 && setIsPaymentModalOpen(true)}
+            disabled={selectedAmount < 1}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-            <line x1="6" y1="1" x2="6" y2="4"></line>
-            <line x1="10" y1="1" x2="10" y2="4"></line>
-            <line x1="14" y1="1" x2="14" y2="4"></line>
-          </svg>
-          Support Developer
-        </button>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+            Support
+          </button>
+        </div>
       </div>
 
-      {/* Donation Modal */}
-      <DonationModal 
-        isOpen={isDonationModalOpen} 
-        onClose={() => setIsDonationModalOpen(false)} 
+      {/* Payment Modal */}
+      <RazorpayPayment 
+        isOpen={isPaymentModalOpen} 
+        onClose={() => setIsPaymentModalOpen(false)}
+        amount={selectedAmount}
+        onSuccess={handlePaymentSuccess}
+        onError={handlePaymentError}
       />
     </div>
   );
