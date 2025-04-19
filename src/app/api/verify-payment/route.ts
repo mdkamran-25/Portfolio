@@ -1,31 +1,47 @@
 import { NextResponse } from 'next/server';
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const paymentId = searchParams.get('paymentId');
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+});
 
-  if (!paymentId) {
-    return NextResponse.json({ error: 'Payment ID is required' }, { status: 400 });
-  }
-
+export async function POST(request: Request) {
   try {
-    // Here you would typically:
-    // 1. Check your database for the payment status
-    // 2. Verify with your payment provider's API
-    // 3. Return the actual payment status
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await request.json();
 
-    // For now, we'll simulate a successful payment after 30 seconds
-    const paymentTime = parseInt(paymentId.split('_')[1]);
-    const currentTime = Date.now();
-    const timeElapsed = currentTime - paymentTime;
+    const text = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+      .update(text)
+      .digest("hex");
 
-    if (timeElapsed > 30000) { // 30 seconds
-      return NextResponse.json({ status: 'success' });
-    } else {
-      return NextResponse.json({ status: 'pending' });
+    const isValid = expectedSignature === razorpay_signature;
+
+    if (!isValid) {
+      return NextResponse.json(
+        { error: 'Invalid payment signature' },
+        { status: 400 }
+      );
     }
+
+    // Fetch payment details to verify status
+    const payment = await razorpay.payments.fetch(razorpay_payment_id);
+
+    if (payment.status !== 'captured') {
+      return NextResponse.json(
+        { error: 'Payment not captured' },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({ success: true, payment });
   } catch (error) {
     console.error('Error verifying payment:', error);
-    return NextResponse.json({ status: 'failed' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to verify payment' },
+      { status: 500 }
+    );
   }
 } 

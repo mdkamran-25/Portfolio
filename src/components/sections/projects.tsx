@@ -1,10 +1,11 @@
 'use client';
 
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
-import DonationModal from "@/components/DonationModal";
+import { RazorpayPayment } from '@/components/RazorpayPayment';
+import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
 
 // Project Card Component
 interface ProjectCardProps {
@@ -49,7 +50,8 @@ interface ProjectDetailsProps {
 function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
   const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
   const coffeeButtonColor = 'bg-amber-600 hover:bg-amber-700';
-  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const SUPPORT_AMOUNT = 99; // Fixed amount for project support
 
   return (
     <div className={`h-full rounded-xl ${bgColor} p-4 sm:p-6`}>
@@ -120,7 +122,7 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
             Use This Source Code For Free
           </a>
           <button
-            onClick={() => setIsDonationModalOpen(true)}
+            onClick={() => setIsPaymentModalOpen(true)}
             className={`inline-block rounded-full ${coffeeButtonColor} px-4 py-2 text-sm text-white transition-colors text-center flex items-center justify-center gap-2`}
           >
             <svg 
@@ -145,10 +147,18 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
         </div>
       </div>
 
-      {/* Donation Modal */}
-      <DonationModal 
-        isOpen={isDonationModalOpen} 
-        onClose={() => setIsDonationModalOpen(false)} 
+      {/* Payment Modal */}
+      <RazorpayPayment 
+        isOpen={isPaymentModalOpen} 
+        onClose={() => setIsPaymentModalOpen(false)}
+        amount={SUPPORT_AMOUNT}
+        onSuccess={(response: RazorpayResponse) => {
+          console.log('Payment successful:', response);
+          setIsPaymentModalOpen(false);
+        }}
+        onError={(error: RazorpayError) => {
+          console.error('Payment failed:', error);
+        }}
       />
     </div>
   );
