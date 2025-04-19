@@ -1,7 +1,8 @@
 export interface Project {
-  image: string;
+  id: string;
   title: string;
   description: string;
+  image: string;
   tech: string[];
   link: string;
   demoLink: string;
@@ -20,66 +21,43 @@ export interface FreelanceProject extends Project {
 }
 
 export const featuredProjects: Project[] = [
-  // {
-  //   image: "/project.png",
-  //   title: "Portfolio Website",
-  //   description: "A modern portfolio website built with Next.js and Tailwind CSS. Features responsive design, dark mode, and smooth animations.",
-  //   tech: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
-  //   link: "https://github.com/mdkamran-25/Portfolio",
-  //   demoLink: "https://mdkamran.vercel.app/"
-  // },
-  // {
-  //   image: "/currentProject.png",
-  //   title: "Weather Dashboard",
-  //   description: "A weather dashboard that displays current weather and forecasts for multiple locations. Includes interactive maps and detailed weather data.",
-  //   tech: ["React", "OpenWeather API", "Chart.js", "Tailwind CSS"],
-  //   link: "https://github.com/mdkamran-25/weather-dashboard",
-  //   demoLink: "https://weather-dashboard-demo.vercel.app/"
-  // },
   {
-    image: "/images/DatingApp.png",
-    title: "Dating App",
-    description: "A dating app that allows users to find matches based on their preferences. Features a chat interface and a matching algorithm.",
-    tech: ["Next.js", "Firebase", "Tailwind CSS", "REST API"],
-    link: "https://github.com/mdkamran-25/ShardaDating-",
-    demoLink: "https://sharda-dating-b4cs.vercel.app/"
+    id: 'project-1',
+    title: 'Dating App',
+    description: 'A modern dating application built with React Native and Node.js',
+    image: '/projects/DatingApp.png',
+    tech: ['React Native', 'Node.js', 'MongoDB', 'Tailwind CSS'],
+    link: 'https://github.com/yourusername/dating-app',
+    demoLink: 'https://dating-app-demo.com'
+  },
+  {
+    id: 'project-2',
+    title: 'Portfolio Website',
+    description: 'A modern portfolio website built with Next.js and Tailwind CSS',
+    image: '/projects/project.png',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
+    link: 'https://github.com/yourusername/portfolio',
+    demoLink: 'https://portfolio-demo.com'
   }
 ];
 
 export const freelanceProjects: FreelanceProject[] = [
   {
-    image: "/krmagsLight.png",
-    title: "E-commerce Platform",
-    description: "Full-featured e-commerce platform with cart and checkout functionality. Includes product filtering, search, and user authentication.",
-    tech: ["React", "Node.js", "Firebase", "Tailwind CSS", "Rest API"],
-    link: "https://github.com/mdkamran-25/krmagsPage",
-    demoLink: "https://krmags.com",
-    client: "krmags",
-    role: "Full Stack Developer",
-    duration: "2 months",
+    id: 'freelance-1',
+    title: 'Krmags Light',
+    description: 'A B2B e-commerce platform for distributors and sellers',
+    image: '/projects/krmagsLight.png',
+    tech: ['React', 'Next.js', 'Tailwind CSS'],
+    link: 'https://github.com/yourusername/krmags-light',
+    demoLink: 'https://krmags-light-demo.com',
+    client: 'Krmags',
+    role: 'Frontend Developer',
+    duration: '3 months',
     review: {
       rating: 5,
-      comment: "Exceptional work! The e-commerce platform exceeded our expectations. The attention to detail and user experience is outstanding.",
-      reviewer: "Aquib",
-      position: "Owner, krmags"
+      comment: 'Excellent work and communication throughout the project',
+      reviewer: 'John Doe',
+      position: 'CEO'
     }
-  },
-  //Can add more projects here
-  // {
-  //   image: "/KrmagsDark.png",
-  //   title: "Dating App",
-  //   description: "Collaborative task management application with real-time updates. Features include task assignment, progress tracking, and team collaboration tools.",
-  //   tech: ["TypeScript", "Firebase", "Material-UI", "React", "Redux"],
-  //   link: "https://github.com/yourusername/project3",
-  //   demoLink: "https://your-taskapp-url.com",
-  //   client: "TechCorp Inc.",
-  //   role: "Frontend Developer",
-  //   duration: "2 months",
-  //   review: {
-  //     rating: 5,
-  //     comment: "A highly skilled developer who delivered a robust and scalable solution. Communication was excellent throughout the project.",
-  //     reviewer: "Devid ",
-  //     position: "CTO, TechCorp Inc."
-  //   }
-  // }
+  }
 ]; 

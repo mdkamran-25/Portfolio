@@ -1,4 +1,9 @@
 "use client";
+import React from 'react';
+// These imports will be used in future updates
+// import Image from 'next/image';
+// import { ArrowRight } from 'lucide-react';
+// import Link from 'next/link';
 import Profile from "@/components/sections/profile";
 import Projects from "@/components/sections/projects";
 import FreelanceProjects from "@/components/sections/freelance-projects";
