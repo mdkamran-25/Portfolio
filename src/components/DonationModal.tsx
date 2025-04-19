@@ -14,25 +14,25 @@ const UPI_APPS = [
     name: 'Google Pay', 
     scheme: 'gpay',
     url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+      `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}&mc=0000`
   },
   { 
     name: 'PhonePe', 
     scheme: 'phonepe',
     url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+      `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}&mc=0000`
   },
   { 
     name: 'Paytm', 
     scheme: 'paytm',
     url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+      `paytmmp://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}&mc=0000`
   },
   { 
     name: 'Amazon Pay', 
     scheme: 'amazon',
     url: (upiId: string, name: string, amount: number, message?: string) => 
-      `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`
+      `amazonpay://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}&mc=0000`
   }
 ];
 
@@ -49,16 +49,12 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
   const [isCustom, setIsCustom] = useState(false);
   const [copied, setCopied] = useState(false);
   const [selectedApp, setSelectedApp] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const [message, setMessage] = useState<string>('');
   const UPI_ID = 'keykamran7366@ybl';
   const RECIPIENT_NAME = 'Kamran';
   const PHONE_NUMBER = '7366972054';
-  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
-  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'success' | 'failed'>('pending');
+  const [isMobile, setIsMobile] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [paymentId, setPaymentId] = useState<string | null>(null);
-  const [isCheckingPayment, setIsCheckingPayment] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -110,64 +106,57 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     setSelectedApp(app.scheme);
   };
 
-  const verifyPayment = async (paymentId: string) => {
-    try {
-      const response = await fetch(`/api/verify-payment?paymentId=${paymentId}`);
-      const data = await response.json();
-      
-      if (data.status === 'success') {
-        setIsPaymentSuccessful(true);
-        setPaymentStatus('success');
-        setIsCheckingPayment(false);
-      } else if (data.status === 'failed') {
-        setPaymentStatus('failed');
-        setIsCheckingPayment(false);
-      }
-    } catch (error) {
-      console.error('Error verifying payment:', error);
-      setIsCheckingPayment(false);
-    }
-  };
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    
-    if (paymentId && isCheckingPayment) {
-      intervalId = setInterval(() => {
-        verifyPayment(paymentId);
-      }, 5000); // Check every 5 seconds
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [paymentId, isCheckingPayment]);
-
-  const handleProceedToPay = () => {
-    const amount = isCustom ? parseInt(customAmount) : selectedAmount;
-    if (amount && amount > 0 && selectedApp) {
-      const app = UPI_APPS.find(a => a.scheme === selectedApp);
-      if (app) {
-        // Generate a unique payment ID
-        const newPaymentId = `payment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        setPaymentId(newPaymentId);
-        setIsCheckingPayment(true);
-        
-        const paymentUrl = app.url(UPI_ID, RECIPIENT_NAME, amount, message);
-        window.location.href = paymentUrl;
-        setShowConfirmButton(true);
-      }
-    }
-  };
-
   const getUPIString = () => {
     const amount = isCustom ? parseInt(customAmount) : selectedAmount;
     if (amount && amount > 0) {
       return `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(RECIPIENT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`;
     }
     return `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(RECIPIENT_NAME)}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`;
+  };
+
+  const handleProceedToPay = () => {
+    const amount = isCustom ? parseInt(customAmount) : selectedAmount;
+    if (amount && amount > 0 && selectedApp) {
+      const app = UPI_APPS.find(a => a.scheme === selectedApp);
+      if (app) {
+        try {
+          const paymentUrl = app.url(UPI_ID, RECIPIENT_NAME, amount, message);
+          
+          // For mobile devices, try to open the UPI app directly
+          if (isMobile) {
+            // First try to open the app directly using the specific scheme
+            const link = document.createElement('a');
+            link.href = paymentUrl;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // If the app doesn't open within 2 seconds, show a fallback message
+            setTimeout(() => {
+              if (!document.hidden) {
+                // Try the generic UPI URL as fallback
+                const fallbackUrl = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(RECIPIENT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(message || 'Support My Work')}`;
+                window.location.href = fallbackUrl;
+                
+                // If that also fails, show QR code
+                setTimeout(() => {
+                  if (!document.hidden) {
+                    alert('If the UPI app didn\'t open automatically, please scan the QR code below');
+                  }
+                }, 2000);
+              }
+            }, 2000);
+          } else {
+            // For desktop, open in new window
+            window.open(paymentUrl, '_blank', 'noopener,noreferrer');
+          }
+        } catch (error) {
+          console.error('Error initiating payment:', error);
+          alert('Error initiating payment. Please try again or use the QR code.');
+        }
+      }
+    }
   };
 
   if (!isOpen) return null;
@@ -185,218 +174,138 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         <div className="overflow-y-auto max-h-[calc(100vh-4rem)]">
-          {isPaymentSuccessful ? (
-            <div className="flex flex-col items-center space-y-6 py-8">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-24 w-24 animate-ping rounded-full bg-orange-500/20"></div>
-                </div>
-                <CheckCircle2 className="h-24 w-24 text-orange-500" />
-              </div>
-              
-              <div className="text-center space-y-2">
-                <h2 className="text-2xl font-bold text-white">Payment Successful!</h2>
-                <p className="text-neutral-400">
-                  Thank you for your support. Your contribution means a lot to me.
-                </p>
-              </div>
+          <h2 className="mb-4 text-xl font-bold text-white sm:mb-6 sm:text-2xl">Support My Work</h2>
+          
+          <div className="mb-4 space-y-3 sm:mb-6 sm:space-y-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <button
+                onClick={() => handleAmountSelect(99)}
+                className={`rounded-lg border p-3 text-center transition-colors sm:p-4 ${
+                  selectedAmount === 99
+                    ? 'border-orange-500 bg-orange-500/10 text-orange-500'
+                    : 'border-neutral-700 text-neutral-300 hover:border-orange-500 hover:text-orange-500'
+                }`}
+              >
+                <span className="text-lg font-semibold sm:text-xl">₹99</span>
+              </button>
+              <button
+                onClick={() => handleAmountSelect(199)}
+                className={`rounded-lg border p-3 text-center transition-colors sm:p-4 ${
+                  selectedAmount === 199
+                    ? 'border-orange-500 bg-orange-500/10 text-orange-500'
+                    : 'border-neutral-700 text-neutral-300 hover:border-orange-500 hover:text-orange-500'
+                }`}
+              >
+                <span className="text-lg font-semibold sm:text-xl">₹199</span>
+              </button>
+            </div>
 
-              <div className="w-full space-y-4">
-                <div className="rounded-lg border border-neutral-700 p-4">
-                  <h3 className="mb-3 text-sm font-semibold text-neutral-300">Payment Details</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-neutral-400">Amount</span>
-                      <span className="font-medium text-white">
-                        ₹{isCustom ? customAmount : selectedAmount}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-neutral-400">Payment Method</span>
-                      <span className="font-medium text-white">
-                        {selectedApp ? UPI_APPS.find(app => app.scheme === selectedApp)?.name : 'UPI QR Code'}
-                      </span>
-                    </div>
-                    {message && (
-                      <div className="flex justify-between">
-                        <span className="text-neutral-400">Message</span>
-                        <span className="font-medium text-white">{message}</span>
-                      </div>
-                    )}
+            <div className="relative">
+              <input
+                type="text"
+                value={customAmount}
+                onChange={handleCustomAmount}
+                placeholder="Enter custom amount"
+                className={`w-full rounded-lg border bg-neutral-800 p-3 text-white placeholder-neutral-500 focus:border-orange-500 focus:outline-none sm:p-4 ${
+                  isCustom ? 'border-orange-500' : 'border-neutral-700'
+                }`}
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 sm:right-4">₹</span>
+            </div>
+
+            <div className="relative">
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Add a message (optional)"
+                className="w-full rounded-lg border border-neutral-700 bg-neutral-800 p-3 text-white placeholder-neutral-500 focus:border-orange-500 focus:outline-none sm:p-4"
+                rows={2}
+                maxLength={100}
+              />
+              <MessageSquare className="absolute right-3 top-3 h-4 w-4 text-neutral-400 sm:right-4 sm:top-4 sm:h-5 sm:w-5" />
+              <span className="absolute bottom-1 right-2 text-xs text-neutral-500 sm:bottom-2">
+                {message.length}/100
+              </span>
+            </div>
+
+            <div className="mt-4 rounded-lg border border-neutral-700 p-3 sm:mt-6 sm:p-4">
+              <h3 className="mb-2 text-sm font-semibold text-neutral-300">UPI Payment Details</h3>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-neutral-500">UPI ID</p>
+                    <span className="text-sm text-neutral-400 sm:text-base">{UPI_ID}</span>
                   </div>
+                  <button
+                    onClick={handleCopyUPI}
+                    className="text-neutral-400 hover:text-orange-500"
+                    title="Copy UPI ID"
+                  >
+                    {copied ? (
+                      <Check className="h-4 w-4 sm:h-5 sm:w-5" />
+                    ) : (
+                      <Copy className="h-4 w-4 sm:h-5 sm:w-5" />
+                    )}
+                  </button>
                 </div>
-
-                <button
-                  onClick={onClose}
-                  className="w-full rounded-lg bg-orange-500 px-6 py-3 text-white transition-colors hover:bg-orange-600"
-                >
-                  Close
-                </button>
+                <div>
+                  <p className="text-xs text-neutral-500">Phone Number</p>
+                  <span className="text-sm text-neutral-400 sm:text-base">+91 {PHONE_NUMBER}</span>
+                </div>
               </div>
             </div>
-          ) : (
-            <>
-              <h2 className="mb-4 text-xl font-bold text-white sm:mb-6 sm:text-2xl">Support My Work</h2>
-              
-              <div className="mb-4 space-y-3 sm:mb-6 sm:space-y-4">
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+
+            {isMobile ? (
+              <div className="mt-4 sm:mt-6">
+                <h3 className="mb-2 text-sm font-semibold text-neutral-300 sm:mb-3">Select Payment App</h3>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                  {UPI_APPS.map((app) => (
+                    <button
+                      key={app.scheme}
+                      onClick={() => handleAppSelect(app)}
+                      className={`flex items-center justify-center gap-1.5 rounded-lg border p-2 text-sm transition-colors sm:gap-2 sm:p-3 sm:text-base ${
+                        selectedApp === app.scheme
+                          ? 'border-orange-500 bg-orange-500/10 text-orange-500'
+                          : 'border-neutral-700 text-neutral-300 hover:border-orange-500 hover:text-orange-500'
+                      }`}
+                    >
+                      <Smartphone className="h-4 w-4 sm:h-5 sm:w-5" />
+                      <span>{app.name}</span>
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-2 text-xs text-neutral-400 text-center">
+                  Select your preferred UPI app and click Proceed to Pay
+                </p>
+
+                {showConfirmButton && (
                   <button
-                    onClick={() => handleAmountSelect(99)}
-                    className={`rounded-lg border p-3 text-center transition-colors sm:p-4 ${
-                      selectedAmount === 99
-                        ? 'border-orange-500 bg-orange-500/10 text-orange-500'
-                        : 'border-neutral-700 text-neutral-300 hover:border-orange-500 hover:text-orange-500'
-                    }`}
+                    onClick={handleProceedToPay}
+                    className="mt-4 w-full rounded-lg bg-orange-500 px-6 py-2 text-sm text-white transition-colors hover:bg-orange-600"
                   >
-                    <span className="text-lg font-semibold sm:text-xl">₹99</span>
+                    Proceed to Pay
                   </button>
-                  <button
-                    onClick={() => handleAmountSelect(199)}
-                    className={`rounded-lg border p-3 text-center transition-colors sm:p-4 ${
-                      selectedAmount === 199
-                        ? 'border-orange-500 bg-orange-500/10 text-orange-500'
-                        : 'border-neutral-700 text-neutral-300 hover:border-orange-500 hover:text-orange-500'
-                    }`}
-                  >
-                    <span className="text-lg font-semibold sm:text-xl">₹199</span>
-                  </button>
-                </div>
-
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={customAmount}
-                    onChange={handleCustomAmount}
-                    placeholder="Enter custom amount"
-                    className={`w-full rounded-lg border bg-neutral-800 p-3 text-white placeholder-neutral-500 focus:border-orange-500 focus:outline-none sm:p-4 ${
-                      isCustom ? 'border-orange-500' : 'border-neutral-700'
-                    }`}
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 sm:right-4">₹</span>
-                </div>
-
-                <div className="relative">
-                  <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Add a message (optional)"
-                    className="w-full rounded-lg border border-neutral-700 bg-neutral-800 p-3 text-white placeholder-neutral-500 focus:border-orange-500 focus:outline-none sm:p-4"
-                    rows={2}
-                    maxLength={100}
-                  />
-                  <MessageSquare className="absolute right-3 top-3 h-4 w-4 text-neutral-400 sm:right-4 sm:top-4 sm:h-5 sm:w-5" />
-                  <span className="absolute bottom-1 right-2 text-xs text-neutral-500 sm:bottom-2">
-                    {message.length}/100
-                  </span>
-                </div>
-
-                <div className="mt-4 rounded-lg border border-neutral-700 p-3 sm:mt-6 sm:p-4">
-                  <h3 className="mb-2 text-sm font-semibold text-neutral-300">UPI Payment Details</h3>
-                  <div className="space-y-2 sm:space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-neutral-500">UPI ID</p>
-                        <span className="text-sm text-neutral-400 sm:text-base">{UPI_ID}</span>
-                      </div>
-                      <button
-                        onClick={handleCopyUPI}
-                        className="text-neutral-400 hover:text-orange-500"
-                        title="Copy UPI ID"
-                      >
-                        {copied ? (
-                          <Check className="h-4 w-4 sm:h-5 sm:w-5" />
-                        ) : (
-                          <Copy className="h-4 w-4 sm:h-5 sm:w-5" />
-                        )}
-                      </button>
-                    </div>
-                    <div>
-                      <p className="text-xs text-neutral-500">Phone Number</p>
-                      <span className="text-sm text-neutral-400 sm:text-base">+91 {PHONE_NUMBER}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {isMobile ? (
-                  <div className="mt-4 sm:mt-6">
-                    <h3 className="mb-2 text-sm font-semibold text-neutral-300 sm:mb-3">Select Payment App</h3>
-                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                      {UPI_APPS.map((app) => (
-                        <button
-                          key={app.scheme}
-                          onClick={() => handleAppSelect(app)}
-                          className={`flex items-center justify-center gap-1.5 rounded-lg border p-2 text-sm transition-colors sm:gap-2 sm:p-3 sm:text-base ${
-                            selectedApp === app.scheme
-                              ? 'border-orange-500 bg-orange-500/10 text-orange-500'
-                              : 'border-neutral-700 text-neutral-300 hover:border-orange-500 hover:text-orange-500'
-                          }`}
-                        >
-                          <Smartphone className="h-4 w-4 sm:h-5 sm:w-5" />
-                          <span>{app.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mt-4 sm:mt-6">
-                    <h3 className="mb-2 text-sm font-semibold text-neutral-300 sm:mb-3">Scan QR Code to Pay</h3>
-                    <div className="flex flex-col items-center space-y-3 sm:space-y-4">
-                      <div className="rounded-lg border border-neutral-700 p-3 bg-white sm:p-4">
-                        <QRCodeSVG
-                          value={getUPIString()}
-                          size={160}
-                          level="H"
-                          includeMargin={true}
-                        />
-                      </div>
-                      <p className="text-center text-xs text-neutral-400 sm:text-sm">
-                        Scan this QR code with any UPI app on your phone to make the payment
-                      </p>
-                      {showConfirmButton && (
-                        <button
-                          onClick={handleProceedToPay}
-                          className="mt-4 rounded-lg bg-orange-500 px-6 py-2 text-sm text-white transition-colors hover:bg-orange-600"
-                        >
-                          I've Completed the Payment
-                        </button>
-                      )}
-                    </div>
-                  </div>
                 )}
               </div>
-
-              {isMobile && showConfirmButton && (
-                <button
-                  onClick={handleProceedToPay}
-                  className="mt-4 w-full rounded-lg bg-orange-500 px-6 py-2 text-sm text-white transition-colors hover:bg-orange-600"
-                >
-                  I've Completed the Payment
-                </button>
-              )}
-
-              {isCheckingPayment && (
-                <div className="mt-4 text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
-                  <p className="mt-2 text-sm text-neutral-400">Verifying payment status...</p>
+            ) : (
+              <div className="mt-4 sm:mt-6">
+                <h3 className="mb-2 text-sm font-semibold text-neutral-300 sm:mb-3">Scan QR Code to Pay</h3>
+                <div className="flex flex-col items-center space-y-3 sm:space-y-4">
+                  <div className="rounded-lg border border-neutral-700 p-3 bg-white sm:p-4">
+                    <QRCodeSVG
+                      value={getUPIString()}
+                      size={160}
+                      level="H"
+                      includeMargin={true}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-neutral-400 sm:text-sm">
+                    Scan this QR code with any UPI app on your phone to make the payment
+                  </p>
                 </div>
-              )}
-
-              {paymentStatus === 'failed' && (
-                <div className="mt-4 text-center">
-                  <p className="text-red-500">Payment verification failed. Please try again.</p>
-                  <button
-                    onClick={() => {
-                      setPaymentStatus('pending');
-                      setIsCheckingPayment(false);
-                    }}
-                    className="mt-2 text-sm text-orange-500 hover:text-orange-600"
-                  >
-                    Retry
-                  </button>
-                </div>
-              )}
-            </>
-          )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
