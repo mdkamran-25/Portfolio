@@ -6,6 +6,7 @@ import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
 import { RazorpayPayment } from '@/components/RazorpayPayment';
 import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
+import SupportWork from './support-work';
 
 // Project Card Component
 interface ProjectCardProps {
@@ -49,9 +50,6 @@ interface ProjectDetailsProps {
 
 function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
   const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
-  const coffeeButtonColor = 'bg-amber-600 hover:bg-amber-700';
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const SUPPORT_AMOUNT = 99; // Fixed amount for project support
 
   return (
     <div className={`h-full rounded-xl ${bgColor} p-4 sm:p-6`}>
@@ -84,18 +82,7 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
 
       {/* Project Links */}
       <div className="mb-6">
-        {/* <h3 className="text-lg font-semibold text-white mb-2">
-          Project Links
-        </h3> */}
         <div className="flex flex-col gap-2">
-          {/* <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-block rounded-full bg-neutral-800 hover:bg-neutral-700 px-4 py-2 text-sm text-white transition-colors text-center`}
-          >
-            Source Code
-          </a> */}
           <a
             href={project.demoLink}
             target="_blank"
@@ -108,10 +95,7 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
       </div>
 
       {/* Support Section */}
-      <div className={`border-t ${borderColor} pt-4`}>
-        <h3 className="text-lg font-semibold text-white mb-2">
-          Support This Project
-        </h3>
+      <div className="pt-0">
         <div className="flex flex-col gap-3">
           <a
             href={project.link}
@@ -121,45 +105,8 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
           >
             Use This Source Code For Free
           </a>
-          <button
-            onClick={() => setIsPaymentModalOpen(true)}
-            className={`inline-block rounded-full ${coffeeButtonColor} px-4 py-2 text-sm text-white transition-colors text-center flex items-center justify-center gap-2`}
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-              <line x1="6" y1="1" x2="6" y2="4"></line>
-              <line x1="10" y1="1" x2="10" y2="4"></line>
-              <line x1="14" y1="1" x2="14" y2="4"></line>
-            </svg>
-            Buy Me A Coffee
-          </button>
         </div>
       </div>
-
-      {/* Payment Modal */}
-      <RazorpayPayment 
-        isOpen={isPaymentModalOpen} 
-        onClose={() => setIsPaymentModalOpen(false)}
-        amount={SUPPORT_AMOUNT}
-        onSuccess={(response: RazorpayResponse) => {
-          console.log('Payment successful:', response);
-          setIsPaymentModalOpen(false);
-        }}
-        onError={(error: RazorpayError) => {
-          console.error('Payment failed:', error);
-        }}
-      />
     </div>
   );
 }
@@ -223,6 +170,9 @@ export default function Projects({
           View All Projects
         </a>
       </div>
+
+      {/* Support Work Section */}
+      <SupportWork />
     </div>
   );
 }
