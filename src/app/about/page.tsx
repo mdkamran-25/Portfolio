@@ -16,7 +16,7 @@ const AboutPage = () => {
             <div className="sticky top-24">
               <div className="mb-8 overflow-hidden rounded-2xl">
                 <Image
-                  src="/kamran.jpeg"
+                  src="/images/kamran.jpeg"
                   alt="Mohammad Kamran"
                   width={400}
                   height={400}

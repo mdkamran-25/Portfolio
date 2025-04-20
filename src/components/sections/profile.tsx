@@ -12,13 +12,12 @@ export default function Profile() {
       <div className="flex items-start gap-3 sm:gap-4">
         <div className="relative h-14 w-14 overflow-hidden rounded-2xl sm:h-16 sm:w-16">
           <Image
-            src="/kamran.jpeg"
+            src="/images/kamran.jpeg"
             alt="Kamran's profile picture"
             width={64}
             height={64}
             className="h-full w-full object-cover"
             priority
-            unoptimized
           />
         </div>
         <div className="flex flex-col">
