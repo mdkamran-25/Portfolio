@@ -71,8 +71,8 @@ export const freelanceProjects: FreelanceProject[] = [
       title: 'Support This Work',
       description: 'If you find this project valuable, consider supporting the development',
       amounts: [
-        { amount: 99, label: 'Basic Support' },
-        { amount: 199, label: 'Premium Support' },
+        { amount: 199, label: 'Basic Support' },
+        { amount: 299, label: 'Premium Support' },
         { amount: 999, label: 'Enterprise Support' }
       ]
     }
