@@ -84,18 +84,18 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
 
       {/* Project Links */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">
+        {/* <h3 className="text-lg font-semibold text-white mb-2">
           Project Links
-        </h3>
+        </h3> */}
         <div className="flex flex-col gap-2">
-          <a
+          {/* <a
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
             className={`inline-block rounded-full bg-neutral-800 hover:bg-neutral-700 px-4 py-2 text-sm text-white transition-colors text-center`}
           >
             Source Code
-          </a>
+          </a> */}
           <a
             href={project.demoLink}
             target="_blank"

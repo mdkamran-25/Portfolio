@@ -133,22 +133,19 @@ const Footer: React.FC = () => {
               {/* Contact */}
               <div className="flex flex-col space-y-4">
                 <h3 className="text-lg font-semibold text-white">Contact Us</h3>
-                <ul className="flex flex-col space-y-3">
-                  <li className="flex items-start space-x-4">
-                    <UilMapMarker className="h-6 w-6 text-orange-500" />
-                    <span className="text-neutral-400 text-sm sm:text-base">
-                      CGEWHO Kendriya Vihar Greater Noida D2-902 ( Plot No.7, Sector P-4, Phi-2, Builders Area, Near Unitech Heights, Greater Noida, Uttar Pradesh 201310 )
+                <ul className="flex flex-col space-y-4">
+                  <li className="flex flex-col space-y-1">
+                    <span className="text-neutral-400 text-sm">
+                      CGEWHO Kendriya Vihar Greater Noida<br />
+                      Plot No.7, Sector P-4, Phi-2, Builders Area<br />
+                      Near Unitech Heights, Greater Noida<br />
+                      Uttar Pradesh 201310
                     </span>
                   </li>
-                  <li className="flex items-start justify-between space-x-2 sm:space-x-3">
-                    <div className="flex items-start space-x-2 sm:space-x-3">
-                      <svg className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      <a href="mailto:webhost01001@gmail.com" className="text-neutral-400 hover:text-orange-500 transition-colors text-xs sm:text-sm md:text-base break-all">
-                        webhost01001@gmail.com
-                      </a>
-                    </div>
+                  <li className="flex items-center justify-between">
+                    <a href="mailto:webhost01001@gmail.com" className="text-neutral-400 hover:text-orange-500 transition-colors text-sm">
+                      webhost01001@gmail.com
+                    </a>
                     <button
                       onClick={() => copyToClipboard('webhost01001@gmail.com', 'email')}
                       className="ml-2 text-neutral-400 hover:text-orange-500 transition-colors"
@@ -165,15 +162,10 @@ const Footer: React.FC = () => {
                       )}
                     </button>
                   </li>
-                  <li className="flex items-start justify-between space-x-2 sm:space-x-3">
-                    <div className="flex items-start space-x-2 sm:space-x-3">
-                      <svg className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                      </svg>
-                      <a href="tel:+917366972054" className="text-neutral-400 hover:text-orange-500 transition-colors text-xs sm:text-sm md:text-base">
-                        +91 7366972054
-                      </a>
-                    </div>
+                  <li className="flex items-center justify-between">
+                    <a href="tel:+917366972054" className="text-neutral-400 hover:text-orange-500 transition-colors text-sm">
+                      +91 7366972054
+                    </a>
                     <button
                       onClick={() => copyToClipboard('+917366972054', 'phone')}
                       className="ml-2 text-neutral-400 hover:text-orange-500 transition-colors"

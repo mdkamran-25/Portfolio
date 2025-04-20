@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Coffee } from 'lucide-react';
+import { Coffee, Star } from 'lucide-react';
 import { RazorpayPayment } from '@/components/RazorpayPayment';
 import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
-
-const PREDEFINED_AMOUNTS = [
-  { amount: 99, label: 'Basic Support' },
-  { amount: 199, label: 'Premium Support' },
-  { amount: 999, label: 'Enterprise Support' },
-];
+import { freelanceProjects } from '@/constants/projects';
 
 const Freelance = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -28,17 +23,67 @@ const Freelance = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
+        {/* Client Review Section */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold mb-8 text-center">Client Review</h2>
+          {freelanceProjects.map((project) => (
+            project.review && (
+              <div key={project.id} className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  {[...Array(project.review.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-600 mb-4">{project.review.comment}</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-gray-800">{project.review.reviewer}</p>
+                    <p className="text-sm text-gray-500">{project.review.position}</p>
+                  </div>
+                  <p className="text-sm text-gray-500">{project.client}</p>
+                </div>
+                
+              </div>
+
+            )
+          ))}
+        </div>
+        
+        
+
+        {/* Support Section */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Support My Work</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            If you find my work valuable and would like to support me, you can choose from the options below or enter a custom amount.
+          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+            Your support helps me continue creating valuable content and projects. Choose an amount that works for you.
           </p>
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 className="text-xl font-semibold mb-4">What You're Supporting</h3>
+            <ul className="text-left space-y-3 text-gray-600">
+              <li className="flex items-start gap-2">
+                <span className="text-orange-500">•</span>
+                <span>Development of open-source projects and tools</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-500">•</span>
+                <span>Creation of educational content and tutorials</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-500">•</span>
+                <span>Maintenance and updates of existing projects</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-orange-500">•</span>
+                <span>Development of new features and improvements</span>
+              </li>
+            </ul>
+          </div>
         </div>
         
         {/* Support Options */}
         <div className="max-w-2xl mx-auto">
           <div className="grid grid-cols-3 gap-4 mb-6">
-            {PREDEFINED_AMOUNTS.map((option) => (
+            {freelanceProjects[0].support?.amounts.map((option) => (
               <button
                 key={option.amount}
                 onClick={() => {
