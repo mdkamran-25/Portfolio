@@ -8,6 +8,7 @@ import Profile from "@/components/sections/profile";
 import Projects from "@/components/sections/projects";
 import FreelanceProjects from "@/components/sections/freelance-projects";
 import Stack from "@/components/sections/stack";
+import SupportWork from "@/components/sections/support-work";
 import MainLayout from "@/components/layout/MainLayout";
 
 export default function Home() {
@@ -30,6 +31,11 @@ export default function Home() {
         </div>
         <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
           <Projects theme="alternative" title="Featured Projects ..." />
+        </div>
+
+        {/* Support Work Section */}
+        <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+          <SupportWork />
         </div>
       </div>
     </MainLayout>
