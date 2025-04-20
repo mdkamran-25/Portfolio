@@ -6,7 +6,6 @@ import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
 import { RazorpayPayment } from '@/components/RazorpayPayment';
 import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
-import SupportWork from './support-work';
 
 // Project Card Component
 interface ProjectCardProps {
@@ -170,9 +169,6 @@ export default function Projects({
           View All Projects
         </a>
       </div>
-
-      {/* Support Work Section */}
-      <SupportWork />
     </div>
   );
 }

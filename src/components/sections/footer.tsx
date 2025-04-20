@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { UilMapMarker } from '@iconscout/react-unicons';
+import { RazorpayPayment } from '@/components/RazorpayPayment';
+import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
 
 const Footer: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedAmount, setSelectedAmount] = useState(99);
+
+  const handlePaymentSuccess = (response: RazorpayResponse) => {
+    console.log('Payment successful:', response);
+    setIsPaymentModalOpen(false);
+  };
+
+  const handlePaymentError = (error: RazorpayError) => {
+    console.error('Payment failed:', error);
+    setIsPaymentModalOpen(false);
+  };
 
   const copyToClipboard = async (text: string, type: 'email' | 'phone') => {
     try {
@@ -182,6 +196,34 @@ const Footer: React.FC = () => {
                       )}
                     </button>
                   </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setSelectedAmount(99);
+                        setIsPaymentModalOpen(true);
+                      }}
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors text-sm w-fit"
+                    >
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="16" 
+                        height="16" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                      </svg>
+                      Buy Me a Coffee
+                    </button>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -205,6 +247,14 @@ const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            <RazorpayPayment
+              isOpen={isPaymentModalOpen}
+              onClose={() => setIsPaymentModalOpen(false)}
+              amount={selectedAmount}
+              onSuccess={handlePaymentSuccess}
+              onError={handlePaymentError}
+            />
           </div>
         </div>
       </div>
