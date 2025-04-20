@@ -98,9 +98,9 @@ export default function Profile() {
             // Create a link element
             const link = document.createElement('a');
             // Set the href to the PDF file
-            link.href = '/FullStackresume.pdf';
+            link.href = '/resume.pdf';
             // Set the download attribute to force download
-            link.download = 'FullStackresume.pdf';
+            link.download = 'resume.pdf';
             // Append the link to the body
             document.body.appendChild(link);
             // Trigger the download
