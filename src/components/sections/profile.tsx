@@ -24,7 +24,7 @@ export default function Profile() {
         <div className="flex flex-col">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-xl font-bold text-orange-500 sm:text-2xl">
-              i&apos;m Kamran
+              I&apos;m Kamran
             </h1>
             <span className="rounded-full bg-green-500/20 px-2 py-0.5 text-xs text-green-500">
               Available to Work
