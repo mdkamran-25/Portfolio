@@ -2,13 +2,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
-import { RazorpayPayment } from '@/components/RazorpayPayment';
-import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
+import { RazorpayPayment } from "@/components/RazorpayPayment";
+import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
 
 const PREDEFINED_AMOUNTS = [
-  { amount: 99, label: 'Basic Support' },
-  { amount: 199, label: 'Premium Support' },
-  { amount: 999, label: 'Enterprise Support' },
+  { amount: 99, label: "Basic Support" },
+  { amount: 199, label: "Premium Support" },
+  { amount: 999, label: "Enterprise Support" },
 ] as const;
 
 // Project Card Component
@@ -18,22 +18,18 @@ interface ProjectCardProps {
   onClick: () => void;
 }
 
-function ProjectCard({ 
-  project,
-  theme = 'default',
-  onClick
-}: ProjectCardProps) {
+function ProjectCard({ project, theme = "default", onClick }: ProjectCardProps) {
   const { bgColor } = getThemeColors(theme);
 
   return (
-    <div 
-      className={`relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer transition-all duration-300 p-1`}
+    <div
+      className={`relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer p-1 transition-all duration-300`}
       onClick={onClick}
     >
-      <div className="relative h-full w-full rounded-lg overflow-hidden">
-        <Image 
-          src={project.image} 
-          alt={project.title} 
+      <div className="relative h-full w-full overflow-hidden rounded-lg">
+        <Image
+          src={project.image}
+          alt={project.title}
           width={800}
           height={450}
           className="h-full w-full object-cover"
@@ -51,14 +47,17 @@ interface FreelanceProjectDetailsProps {
   theme?: ThemeType;
 }
 
-const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ project, theme = 'default' }) => {
+const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({
+  project,
+  theme = "default",
+}) => {
   const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
       <svg
         key={index}
-        className={`w-5 h-5 ${index < rating ? 'text-yellow-400' : 'text-neutral-600'}`}
+        className={`h-5 w-5 ${index < rating ? "text-yellow-400" : "text-neutral-600"}`}
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -71,19 +70,15 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
     <div className={`h-full rounded-xl ${bgColor} p-4 sm:p-6`}>
       {/* Project Title and Description */}
       <div className="mb-4">
-        <h2 className={`text-xl font-bold ${titleColor} mb-2`}>
-          {project.title}
-        </h2>
-        <p className="text-neutral-300">
-          {project.description}
-        </p>
+        <h2 className={`text-xl font-bold ${titleColor} mb-2`}>{project.title}</h2>
+        <p className="text-neutral-300">{project.description}</p>
       </div>
 
       {/* Client Details */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">
+        {/* <h3 className="text-lg font-semibold text-white mb-2">
           Client Details
-        </h3>
+        </h3> */}
         <div className="space-y-2">
           <p className="text-neutral-300">
             <span className="font-medium">Client:</span> {project.client}
@@ -99,12 +94,10 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
 
       {/* Tech Stack */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">
-          Tech Stack
-        </h3>
+        <h3 className="mb-2 text-lg font-semibold text-white">Tech Stack</h3>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((item, index) => (
-            <span 
+            <span
               key={index}
               className={`rounded-full ${tagBgColor} px-2 py-1 text-xs text-neutral-300`}
             >
@@ -121,7 +114,7 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
             href={project.demoLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-block rounded-full bg-neutral-800 hover:bg-neutral-700 px-4 py-2 text-sm text-white transition-colors text-center`}
+            className={`inline-block rounded-full bg-neutral-800 px-4 py-2 text-center text-sm text-white transition-colors hover:bg-neutral-700`}
           >
             Live Demo
           </a>
@@ -130,30 +123,18 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({ proje
 
       {/* Client Review */}
       <div className={`border-t ${borderColor} pt-4`}>
-        <h3 className="text-lg font-semibold text-white mb-2">
-          Client Review
-        </h3>
+        <h3 className="mb-2 text-lg font-semibold text-white">Client Review</h3>
         {project.review ? (
           <div className="space-y-3">
-            <div className="flex items-center gap-1">
-              {renderStars(project.review.rating)}
-            </div>
-            <p className="text-neutral-300 italic">
-              "{project.review.comment}"
-            </p>
+            <div className="flex items-center gap-1">{renderStars(project.review.rating)}</div>
+            <p className="italic text-neutral-300">"{project.review.comment}"</p>
             <div className="text-sm text-neutral-400">
-              <p className="font-medium text-white">
-                {project.review.reviewer}
-              </p>
-              <p>
-                {project.review.position}
-              </p>
+              <p className="font-medium text-white">{project.review.reviewer}</p>
+              <p>{project.review.position}</p>
             </div>
           </div>
         ) : (
-          <p className="text-neutral-400">
-            No review available for this project.
-          </p>
+          <p className="text-neutral-400">No review available for this project.</p>
         )}
       </div>
     </div>
@@ -167,10 +148,10 @@ interface FreelanceProjectsProps {
   projects?: FreelanceProject[];
 }
 
-export default function FreelanceProjects({ 
-  title = "$ Freelance", 
-  theme = 'default',
-  projects: customProjects
+export default function FreelanceProjects({
+  title = "$ Freelance",
+  theme = "default",
+  projects: customProjects,
 }: FreelanceProjectsProps) {
   const projects = customProjects || freelanceProjects;
   const { titleColor } = getThemeColors(theme);
@@ -179,9 +160,7 @@ export default function FreelanceProjects({
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
       {/* Section Title */}
-      <h1 className={`text-xl font-bold ${titleColor} sm:text-2xl`}>
-        {title}
-      </h1>
+      <h1 className={`text-xl font-bold ${titleColor} sm:text-2xl`}>{title}</h1>
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -189,8 +168,8 @@ export default function FreelanceProjects({
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-4">
             {projects.map((project, index) => (
-              <ProjectCard 
-                key={index} 
+              <ProjectCard
+                key={index}
                 project={project}
                 theme={theme}
                 onClick={() => setSelectedProjectIndex(index)}
@@ -201,10 +180,7 @@ export default function FreelanceProjects({
 
         {/* Project Details Panel */}
         <div className="lg:col-span-2">
-          <FreelanceProjectDetails 
-            project={projects[selectedProjectIndex]} 
-            theme={theme}
-          />
+          <FreelanceProjectDetails project={projects[selectedProjectIndex]} theme={theme} />
         </div>
       </div>
 
@@ -221,4 +197,4 @@ export default function FreelanceProjects({
       </div> */}
     </div>
   );
-} 
+}

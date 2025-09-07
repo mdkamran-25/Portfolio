@@ -22,3 +22,50 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Razorpay Modal Z-index Fix */
+.razorpay-checkout-frame,
+.razorpay-overlay {
+  z-index: 9999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure Razorpay modal is not blocked by other elements */
+iframe[src*="razorpay"] {
+  z-index: 9999 !important;
+  position: fixed !important;
+  pointer-events: auto !important;
+  touch-action: auto !important;
+}
+
+/* Prevent body scroll when Razorpay modal is open */
+body.razorpay-open {
+  overflow: hidden !important;
+}
+
+/* Fix for frozen modal interactions */
+.razorpay-container {
+  pointer-events: auto !important;
+  z-index: 9999 !important;
+}
+
+/* Ensure all Razorpay elements are interactive */
+[class*="razorpay"] {
+  pointer-events: auto !important;
+  z-index: 9999 !important;
+}
+
+/* Fix for backdrop clicks */
+.razorpay-backdrop {
+  pointer-events: auto !important;
+  z-index: 9998 !important;
+}
+
+/* Ensure buttons and inputs inside Razorpay are clickable */
+.razorpay-checkout-frame button,
+.razorpay-checkout-frame input,
+.razorpay-checkout-frame a {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
