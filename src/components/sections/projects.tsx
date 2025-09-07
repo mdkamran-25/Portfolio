@@ -1,11 +1,9 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import React, { useState } from "react";
 import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
-import { RazorpayPayment } from '@/components/RazorpayPayment';
-import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
 
 // Project Card Component
 interface ProjectCardProps {
@@ -14,22 +12,18 @@ interface ProjectCardProps {
   onClick: () => void;
 }
 
-function ProjectCard({ 
-  project,
-  theme = 'default',
-  onClick
-}: ProjectCardProps) {
+function ProjectCard({ project, theme = "default", onClick }: ProjectCardProps) {
   const { bgColor } = getThemeColors(theme);
 
   return (
-    <div 
-      className={`relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer transition-all duration-300 p-1`}
+    <div
+      className={`relative aspect-video overflow-hidden rounded-xl ${bgColor} cursor-pointer p-1 transition-all duration-300`}
       onClick={onClick}
     >
-      <div className="relative h-full w-full rounded-lg overflow-hidden">
-        <Image 
-          src={project.image} 
-          alt={project.title} 
+      <div className="relative h-full w-full overflow-hidden rounded-lg">
+        <Image
+          src={project.image}
+          alt={project.title}
           width={800}
           height={450}
           className="h-full w-full object-cover"
@@ -47,29 +41,23 @@ interface ProjectDetailsProps {
   theme?: ThemeType;
 }
 
-function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
-  const { bgColor, tagBgColor, titleColor, borderColor } = getThemeColors(theme);
+function ProjectDetails({ project, theme = "default" }: ProjectDetailsProps) {
+  const { bgColor, tagBgColor, titleColor } = getThemeColors(theme);
 
   return (
     <div className={`h-full rounded-xl ${bgColor} p-4 sm:p-6`}>
       {/* Project Title and Description */}
       <div className="mb-4">
-        <h2 className={`text-xl font-bold ${titleColor} mb-2`}>
-          {project.title}
-        </h2>
-        <p className="text-neutral-300">
-          {project.description}
-        </p>
+        <h2 className={`text-xl font-bold ${titleColor} mb-2`}>{project.title}</h2>
+        <p className="text-neutral-300">{project.description}</p>
       </div>
 
       {/* Tech Stack */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">
-          Tech Stack
-        </h3>
+        <h3 className="mb-2 text-lg font-semibold text-white">Tech Stack</h3>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((item, index) => (
-            <span 
+            <span
               key={index}
               className={`rounded-full ${tagBgColor} px-2 py-1 text-xs text-neutral-300`}
             >
@@ -86,7 +74,7 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
             href={project.demoLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-block rounded-full bg-neutral-800 hover:bg-neutral-700 px-4 py-2 text-sm text-white transition-colors text-center`}
+            className={`inline-block rounded-full bg-neutral-800 px-4 py-2 text-center text-sm text-white transition-colors hover:bg-neutral-700`}
           >
             Live Demo
           </a>
@@ -100,7 +88,7 @@ function ProjectDetails({ project, theme = 'default' }: ProjectDetailsProps) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-block rounded-full bg-neutral-800 hover:bg-neutral-700 px-4 py-2 text-sm text-white transition-colors text-center`}
+            className={`inline-block rounded-full bg-neutral-800 px-4 py-2 text-center text-sm text-white transition-colors hover:bg-neutral-700`}
           >
             Use This Source Code For Free
           </a>
@@ -117,10 +105,10 @@ interface ProjectsProps {
   projects?: Project[];
 }
 
-export default function Projects({ 
-  title = "Featured Projects ...", 
-  theme = 'default',
-  projects: customProjects
+export default function Projects({
+  title = "Featured Projects ...",
+  theme = "default",
+  projects: customProjects,
 }: ProjectsProps) {
   const projects = customProjects || featuredProjects;
   const { titleColor } = getThemeColors(theme);
@@ -129,9 +117,7 @@ export default function Projects({
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
       {/* Section Title */}
-      <h1 className={`text-xl font-bold ${titleColor} sm:text-2xl`}>
-        {title}
-      </h1>
+      <h1 className={`text-xl font-bold ${titleColor} sm:text-2xl`}>{title}</h1>
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -139,8 +125,8 @@ export default function Projects({
         <div className="lg:col-span-1">
           <div className="grid grid-cols-1 gap-4">
             {projects.map((project, index) => (
-              <ProjectCard 
-                key={index} 
+              <ProjectCard
+                key={index}
                 project={project}
                 theme={theme}
                 onClick={() => setSelectedProjectIndex(index)}
@@ -151,10 +137,7 @@ export default function Projects({
 
         {/* Project Details Panel */}
         <div className="lg:col-span-2">
-          <ProjectDetails 
-            project={projects[selectedProjectIndex]} 
-            theme={theme}
-          />
+          <ProjectDetails project={projects[selectedProjectIndex]} theme={theme} />
         </div>
       </div>
 

@@ -2,22 +2,23 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'standalone',
+  output: "standalone",
+  outputFileTracingRoot: __dirname,
   images: {
     unoptimized: true,
-    domains: ['localhost', 'vercel.app'],
+    domains: ["localhost", "vercel.app"],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**',
+        protocol: "https",
+        hostname: "**",
       },
     ],
   },
   async rewrites() {
     return [
       {
-        source: '/:path*.vue.map',
-        destination: '/_not-found',
+        source: "/:path*.vue.map",
+        destination: "/_not-found",
       },
     ];
   },
@@ -25,12 +26,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|png|jpeg)',
+        source: "/:all*(svg|jpg|png|jpeg)",
         locale: false,
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },
