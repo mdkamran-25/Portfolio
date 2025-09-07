@@ -18,16 +18,23 @@ export interface RazorpayOptions {
   };
   modal?: {
     ondismiss?: () => void;
+    confirm_close?: boolean;
+    escape?: boolean;
+    backdropclose?: boolean;
+    animation?: boolean;
   };
   config?: {
     display?: {
-      blocks?: Record<string, {
-        name: string;
-        instruments: Array<{
-          method: string;
-          flows: string[];
-        }>;
-      }>;
+      blocks?: Record<
+        string,
+        {
+          name: string;
+          instruments: Array<{
+            method: string;
+            flows: string[];
+          }>;
+        }
+      >;
       sequence?: string[];
       preferences?: {
         show_default_blocks?: boolean;
@@ -39,12 +46,23 @@ export interface RazorpayOptions {
     size: number;
     image: boolean;
   };
+  timeout?: number;
+  retry?: {
+    enabled: boolean;
+    max_count: number;
+  };
+  remember_customer?: boolean;
+  readonly?: {
+    email?: boolean;
+    contact?: boolean;
+    name?: boolean;
+  };
   error?: (error: RazorpayError) => void;
 }
 
 export interface RazorpayInstance {
   open(): void;
-  on(event: 'payment.failed' | 'payment.error', callback: (response: RazorpayError) => void): void;
+  on(event: "payment.failed" | "payment.error", callback: (response: RazorpayError) => void): void;
 }
 
 export interface RazorpayConstructor {
@@ -75,4 +93,4 @@ declare global {
   }
 }
 
-export type { RazorpayInstance, RazorpayConstructor, RazorpayResponse, RazorpayError }; 
+export type { RazorpayInstance, RazorpayConstructor, RazorpayResponse, RazorpayError };

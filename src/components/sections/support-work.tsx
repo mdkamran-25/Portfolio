@@ -1,36 +1,62 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Coffee } from 'lucide-react';
-import { RazorpayPayment } from '@/components/RazorpayPayment';
-import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
-import { freelanceProjects } from '@/constants/projects';
+import React, { useState, useRef, useEffect } from "react";
+import { Coffee } from "lucide-react";
+import { RazorpayPayment } from "@/components/RazorpayPayment";
+import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
+import { freelanceProjects } from "@/constants/projects";
 
 const SupportWork = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState(199);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
 
   const handlePaymentSuccess = (response: RazorpayResponse) => {
-    console.log('Payment successful:', response);
+    console.log("Payment successful:", response);
     setIsPaymentModalOpen(false);
   };
 
   const handlePaymentError = (error: RazorpayError) => {
-    console.error('Payment failed:', error);
+    console.error("Payment failed:", error);
     setIsPaymentModalOpen(false);
+  };
+
+  const handleOpenPayment = (amount: number) => {
+    // Clear any existing debounce
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    // Set amount and open modal with debounce
+    setSelectedAmount(amount);
+    debounceRef.current = setTimeout(() => {
+      setIsPaymentModalOpen(true);
+    }, 100);
   };
 
   return (
     <div>
       {/* Support Section */}
-      <div className="text-center mb-8 sm:mb-12">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-yellow-500">Support My Work</h2>
-        <p className="text-white max-w-2xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base">
-          Your support helps me continue creating valuable content and projects. Choose an amount that works for you.
+      <div className="mb-8 text-center sm:mb-12">
+        <h2 className="mb-4 text-2xl font-bold text-yellow-500 sm:text-3xl">Support My Work</h2>
+        <p className="mx-auto mb-6 max-w-2xl text-sm text-white sm:mb-8 sm:text-base">
+          Your support helps me continue creating valuable content and projects. Choose an amount
+          that works for you.
         </p>
-        <div className="max-w-2xl mx-auto bg-gray-900 rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-yellow-500">What You're Supporting</h3>
-          <ul className="text-left space-y-3 text-white text-sm sm:text-base">
+        <div className="mx-auto mb-6 max-w-2xl rounded-lg bg-gray-900 p-4 shadow-lg sm:mb-8 sm:p-6">
+          <h3 className="mb-4 text-lg font-semibold text-yellow-500 sm:text-xl">
+            What You're Supporting
+          </h3>
+          <ul className="space-y-3 text-left text-sm text-white sm:text-base">
             <li className="flex items-start gap-2">
               <span className="text-yellow-500">•</span>
               <span>Development of open-source projects and tools</span>
@@ -52,19 +78,17 @@ const SupportWork = () => {
       </div>
 
       {/* Support Options */}
-      <div className="max-w-2xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div className="mx-auto max-w-2xl">
+        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {freelanceProjects[0].support?.amounts.map((option) => (
             <button
               key={option.amount}
-              onClick={() => {
-                setSelectedAmount(option.amount);
-                setIsPaymentModalOpen(true);
-              }}
-              className={`p-4 rounded-lg border transition-all ${
+              onClick={() => handleOpenPayment(option.amount)}
+              disabled={isPaymentModalOpen}
+              className={`rounded-lg border p-4 transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
                 selectedAmount === option.amount
-                  ? 'border-yellow-500 bg-yellow-900/50 text-yellow-500'
-                  : 'border-gray-700 hover:border-yellow-500 text-white'
+                  ? "border-yellow-500 bg-yellow-900/50 text-yellow-500"
+                  : "border-gray-700 text-white hover:border-yellow-500"
               }`}
             >
               <div className="font-semibold">₹{option.amount}</div>
@@ -74,20 +98,24 @@ const SupportWork = () => {
         </div>
 
         {/* Custom Amount */}
-        <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
           <input
             type="number"
             min="10"
             placeholder="Enter custom amount"
-            className="w-full sm:flex-1 p-3 rounded-lg border border-gray-700 bg-gray-900 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
+            className="w-full rounded-lg border border-gray-700 bg-gray-900 p-3 text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 sm:flex-1"
             onChange={(e) => setSelectedAmount(parseInt(e.target.value) || 0)}
           />
           <button
-            onClick={() => selectedAmount >= 10 && setIsPaymentModalOpen(true)}
-            disabled={selectedAmount < 10}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={() => {
+              if (selectedAmount >= 10) {
+                handleOpenPayment(selectedAmount);
+              }
+            }}
+            disabled={selectedAmount < 10 || isPaymentModalOpen}
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-yellow-500 px-6 py-3 text-black transition-colors hover:bg-yellow-400 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
-            <Coffee className="w-5 h-5" />
+            <Coffee className="h-5 w-5" />
             Support
           </button>
         </div>
@@ -104,4 +132,4 @@ const SupportWork = () => {
   );
 };
 
-export default SupportWork; 
+export default SupportWork;
