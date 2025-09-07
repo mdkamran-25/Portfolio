@@ -62,7 +62,10 @@ export interface RazorpayOptions {
 
 export interface RazorpayInstance {
   open(): void;
-  on(event: "payment.failed" | "payment.error", callback: (response: RazorpayError) => void): void;
+  on(
+    event: "payment.failed" | "payment.error",
+    callback: (response: { error: RazorpayError }) => void
+  ): void;
 }
 
 export interface RazorpayConstructor {

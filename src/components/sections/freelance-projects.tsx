@@ -2,14 +2,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
-import { RazorpayPayment } from "@/components/RazorpayPayment";
-import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
-
-const PREDEFINED_AMOUNTS = [
-  { amount: 99, label: "Basic Support" },
-  { amount: 199, label: "Premium Support" },
-  { amount: 999, label: "Enterprise Support" },
-] as const;
 
 // Project Card Component
 interface ProjectCardProps {

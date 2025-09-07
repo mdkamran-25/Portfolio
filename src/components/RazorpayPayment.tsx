@@ -225,7 +225,7 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
       const razorpay = new window.Razorpay(options);
 
       // Handle payment errors
-      razorpay.on("payment.failed", (response: any) => {
+      razorpay.on("payment.failed", (response: { error: RazorpayError }) => {
         console.error("Payment failed:", response);
         toast.error("Payment failed. Please try again.");
         onError?.({
