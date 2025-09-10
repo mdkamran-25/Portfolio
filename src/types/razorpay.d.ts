@@ -15,6 +15,9 @@ export interface RazorpayOptions {
   notes?: Record<string, string | number | boolean>;
   theme?: {
     color?: string;
+    backdrop_color?: string;
+    image_frame?: boolean;
+    image_padding?: boolean;
   };
   modal?: {
     ondismiss?: () => void;
@@ -22,6 +25,7 @@ export interface RazorpayOptions {
     escape?: boolean;
     backdropclose?: boolean;
     animation?: boolean;
+    handle_frame_close?: boolean;
   };
   config?: {
     display?: {
