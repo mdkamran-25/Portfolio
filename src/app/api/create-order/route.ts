@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
+// Only initialize Razorpay if environment variables are available
+const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET 
+  ? new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    })
+  : null;
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,6 +17,16 @@ const corsHeaders = {
 
 export async function POST(request: Request) {
   try {
+    if (!razorpay) {
+      return NextResponse.json(
+        { error: 'Payment service not configured' },
+        { 
+          status: 503,
+          headers: corsHeaders
+        }
+      );
+    }
+
     const { amount, currency = 'INR' } = await request.json();
 
     if (!amount || isNaN(amount)) {
