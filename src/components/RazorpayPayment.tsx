@@ -171,6 +171,10 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
         },
         theme: {
           color: "#F97316",
+          // Mobile-specific styling to ensure close button visibility
+          backdrop_color: "rgba(0,0,0,0.6)",
+          image_frame: true,
+          image_padding: false,
         },
         modal: {
           ondismiss: () => {
@@ -183,6 +187,8 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
           escape: true, // Allow escape key to close
           backdropclose: true, // Allow clicking outside to close
           animation: true, // Enable smooth animations
+          // Force show close button on mobile devices
+          handle_frame_close: true, // Ensure close button is visible on iframe
         },
         config: {
           display: {
@@ -265,6 +271,58 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
             // Add body class to prevent scroll issues
             document.body.classList.add("razorpay-open");
 
+            // Inject mobile-specific CSS for close button visibility
+            const mobileCloseButtonStyle = document.createElement('style');
+            mobileCloseButtonStyle.id = 'razorpay-mobile-close-style';
+            mobileCloseButtonStyle.textContent = `
+              /* Ensure close button is visible on mobile */
+              .razorpay-checkout-frame {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 9999999 !important;
+              }
+              
+              /* Mobile-specific close button styling */
+              @media (max-width: 768px) {
+                .razorpay-checkout-frame iframe {
+                  border-radius: 0 !important;
+                }
+                
+                /* Force close button to be visible */
+                .razorpay-checkout-frame .close-btn,
+                .razorpay-checkout-frame [data-testid="close-btn"],
+                .razorpay-checkout-frame .rzp-modal-close,
+                .razorpay-checkout-frame .rzp-close {
+                  display: block !important;
+                  visibility: visible !important;
+                  opacity: 1 !important;
+                  position: absolute !important;
+                  top: 10px !important;
+                  right: 10px !important;
+                  width: 30px !important;
+                  height: 30px !important;
+                  background: rgba(0,0,0,0.7) !important;
+                  border-radius: 50% !important;
+                  border: none !important;
+                  color: white !important;
+                  font-size: 18px !important;
+                  cursor: pointer !important;
+                  z-index: 999999 !important;
+                }
+              }
+            `;
+            
+            // Remove existing style if present
+            const existingStyle = document.getElementById('razorpay-mobile-close-style');
+            if (existingStyle) {
+              existingStyle.remove();
+            }
+            
+            document.head.appendChild(mobileCloseButtonStyle);
+
             // Force focus on document body to ensure proper event handling
             document.body.focus();
           }
@@ -275,6 +333,11 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
           // Add event listeners to handle modal state
           const handleRazorpayClose = () => {
             document.body.classList.remove("razorpay-open");
+            // Clean up injected mobile styles
+            const mobileStyle = document.getElementById('razorpay-mobile-close-style');
+            if (mobileStyle) {
+              mobileStyle.remove();
+            }
             // Clean up any remaining overlays after close
             setTimeout(() => {
               const remainingFrames = document.querySelectorAll(
