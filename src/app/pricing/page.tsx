@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Check } from 'lucide-react';
 import { RazorpayPayment } from '@/components/RazorpayPayment';
+import { useRouter } from 'next/navigation';
 import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
 
 interface PricingPackage {
@@ -15,6 +16,7 @@ interface PricingPackage {
 const PricingPage = () => {
   const [selectedPackage, setSelectedPackage] = useState<PricingPackage | null>(null);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const router = useRouter();
 
   const pricingPlans = [
     {
@@ -52,6 +54,9 @@ const PricingPage = () => {
     console.log('Payment successful:', response);
     setIsPaymentModalOpen(false);
     setSelectedPackage(null);
+    
+    // Redirect to thank you page after successful payment
+    router.push('/thank-you');
   };
 
   const handlePaymentError = (error: RazorpayError) => {
