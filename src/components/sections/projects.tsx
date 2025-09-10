@@ -137,7 +137,9 @@ export default function Projects({
 
         {/* Project Details Panel */}
         <div className="lg:col-span-2">
-          <ProjectDetails project={projects[selectedProjectIndex]} theme={theme} />
+          {projects[selectedProjectIndex] && (
+            <ProjectDetails project={projects[selectedProjectIndex]} theme={theme} />
+          )}
         </div>
       </div>
 

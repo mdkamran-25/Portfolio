@@ -1,0 +1,330 @@
+{
+  "timestamp": "2025-09-10T21:47:20.917Z",
+  "summary": {
+    "totalUniqueClasses": 317,
+    "totalFiles": 39,
+    "mostCommonClasses": [
+      [
+        "flex",
+        {
+          "count": 94,
+          "files": {}
+        }
+      ],
+      [
+        "mb-4",
+        {
+          "count": 88,
+          "files": {}
+        }
+      ],
+      [
+        "text-white",
+        {
+          "count": 79,
+          "files": {}
+        }
+      ],
+      [
+        "font-semibold",
+        {
+          "count": 79,
+          "files": {}
+        }
+      ],
+      [
+        "text-sm",
+        {
+          "count": 62,
+          "files": {}
+        }
+      ],
+      [
+        "text-neutral-400",
+        {
+          "count": 54,
+          "files": {}
+        }
+      ],
+      [
+        "font-medium",
+        {
+          "count": 51,
+          "files": {}
+        }
+      ],
+      [
+        "mb-2",
+        {
+          "count": 47,
+          "files": {}
+        }
+      ],
+      [
+        "hover:text-orange-500",
+        {
+          "count": 43,
+          "files": {}
+        }
+      ],
+      [
+        "gap-2",
+        {
+          "count": 40,
+          "files": {}
+        }
+      ],
+      [
+        "items-center",
+        {
+          "count": 38,
+          "files": {}
+        }
+      ],
+      [
+        "block",
+        {
+          "count": 37,
+          "files": {}
+        }
+      ],
+      [
+        "transition-colors",
+        {
+          "count": 37,
+          "files": {}
+        }
+      ],
+      [
+        "mb-8",
+        {
+          "count": 37,
+          "files": {}
+        }
+      ],
+      [
+        "text-xl",
+        {
+          "count": 35,
+          "files": {}
+        }
+      ],
+      [
+        "text-xs",
+        {
+          "count": 33,
+          "files": {}
+        }
+      ],
+      [
+        "px-4",
+        {
+          "count": 29,
+          "files": {}
+        }
+      ],
+      [
+        "text-2xl",
+        {
+          "count": 28,
+          "files": {}
+        }
+      ],
+      [
+        "flex-col",
+        {
+          "count": 27,
+          "files": {}
+        }
+      ],
+      [
+        "w-full",
+        {
+          "count": 26,
+          "files": {}
+        }
+      ]
+    ],
+    "duplicatedPatterns": [
+      [
+        "custom-class",
+        {
+          "count": 4,
+          "files": {}
+        }
+      ],
+      [
+        "fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-2 text-sm text-white transition-colors hover:bg-neutral-700/50 sm:bottom-6 sm:right-6 sm:px-6 sm:py-3 md:bottom-8 md:right-8 relative flex h-2.5 w-2.5 sm:h-3 sm:w-3 absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75 relative inline-flex h-full w-full rounded-full bg-green-500 fixed inset-0 z-[100] flex items-center justify-center bg-black/50 relative h-[90vh] w-[90vw] max-w-4xl rounded-lg bg-white absolute -right-2 -top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-800 text-white hover:bg-neutral-700 rounded-lg",
+        {
+          "count": 2,
+          "files": {}
+        }
+      ]
+    ]
+  },
+  "optimizationOpportunities": [
+    {
+      "category": "Color System",
+      "description": "Frequently used colors that should become design tokens",
+      "classes": [
+        [
+          "text-white",
+          {
+            "count": 79,
+            "files": {}
+          }
+        ],
+        [
+          "text-sm",
+          {
+            "count": 62,
+            "files": {}
+          }
+        ],
+        [
+          "text-neutral-400",
+          {
+            "count": 54,
+            "files": {}
+          }
+        ],
+        [
+          "hover:text-orange-500",
+          {
+            "count": 43,
+            "files": {}
+          }
+        ],
+        [
+          "text-xl",
+          {
+            "count": 35,
+            "files": {}
+          }
+        ],
+        [
+          "text-xs",
+          {
+            "count": 33,
+            "files": {}
+          }
+        ],
+        [
+          "text-2xl",
+          {
+            "count": 28,
+            "files": {}
+          }
+        ],
+        [
+          "text-neutral-300",
+          {
+            "count": 24,
+            "files": {}
+          }
+        ],
+        [
+          "text-lg",
+          {
+            "count": 21,
+            "files": {}
+          }
+        ],
+        [
+          "text-orange-500",
+          {
+            "count": 18,
+            "files": {}
+          }
+        ]
+      ],
+      "impact": "High",
+      "recommendation": "Extract to semantic color tokens"
+    },
+    {
+      "category": "Spacing System",
+      "description": "Repeated spacing patterns",
+      "classes": [
+        [
+          "gap-2",
+          {
+            "count": 40,
+            "files": {}
+          }
+        ],
+        [
+          "gap-4",
+          {
+            "count": 24,
+            "files": {}
+          }
+        ],
+        [
+          "p-6",
+          {
+            "count": 17,
+            "files": {}
+          }
+        ],
+        [
+          "p-4",
+          {
+            "count": 13,
+            "files": {}
+          }
+        ],
+        [
+          "p-3",
+          {
+            "count": 9,
+            "files": {}
+          }
+        ],
+        [
+          "sm:p-6",
+          {
+            "count": 8,
+            "files": {}
+          }
+        ],
+        [
+          "gap-3",
+          {
+            "count": 6,
+            "files": {}
+          }
+        ],
+        [
+          "sm:gap-4",
+          {
+            "count": 6,
+            "files": {}
+          }
+        ],
+        [
+          "custom-class",
+          {
+            "count": 5,
+            "files": {}
+          }
+        ],
+        [
+          "gap-6",
+          {
+            "count": 5,
+            "files": {}
+          }
+        ]
+      ],
+      "impact": "Medium",
+      "recommendation": "Standardize spacing scale"
+    },
+    {
+      "category": "Component Patterns",
+      "description": "Class combinations that appear multiple times",
+      "patterns": [],
+      "impact": "High",
+      "recommendation": "Extract to reusable components"
+    }
+  ]
+}

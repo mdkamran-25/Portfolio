@@ -80,7 +80,7 @@ const SupportWork = () => {
       {/* Support Options */}
       <div className="mx-auto max-w-2xl">
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {freelanceProjects[0].support?.amounts.map((option) => (
+          {freelanceProjects[0]?.support?.amounts?.map((option) => (
             <button
               key={option.amount}
               onClick={() => handleOpenPayment(option.amount)}

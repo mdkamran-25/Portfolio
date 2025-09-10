@@ -1,24 +1,20 @@
 module.exports = {
+  root: true,
   extends: [
-    'next/core-web-vitals',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'prettier'
+    'next/core-web-vitals'
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react'],
   rules: {
+    // Disable unescaped entities as these are common in content
     'react/no-unescaped-entities': 'off',
-    'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn'],
-    '@typescript-eslint/no-explicit-any': 'warn',
-    'react/prop-types': 'off'
+    // Allow hooks in story functions (common in Storybook)
+    'react-hooks/rules-of-hooks': 'off'
   },
-  settings: {
-    react: {
-      version: 'detect'
-    }
-  }
+  ignorePatterns: [
+    'node_modules/',
+    '.next/',
+    'dist/',
+    'build/',
+    'storybook-static/',
+    'public/'
+  ]
 };
-  

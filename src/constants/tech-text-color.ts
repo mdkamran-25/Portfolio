@@ -1,4 +1,4 @@
-export const techColors: Record<string, string> = {
+const techColors = {
   // Frontend Frameworks
   React: "bg-blue-500/20 text-blue-300 border border-blue-500/30",
   "React 18": "bg-blue-500/20 text-blue-300 border border-blue-500/30",
@@ -58,5 +58,5 @@ export const techColors: Record<string, string> = {
 };
 
 export const getTechColor = (tech: string): string => {
-  return techColors[tech] || techColors.default;
+  return (techColors as Record<string, string>)[tech] ?? techColors.default;
 };

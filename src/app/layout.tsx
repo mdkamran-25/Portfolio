@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import WebVitalsReporter from "@/components/WebVitalsReporter";
+import { QueryProvider } from "@/state/providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Kamran - Front End Engineer",
@@ -32,7 +34,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-black antialiased">
-        {children}
+        <QueryProvider>
+          <WebVitalsReporter />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

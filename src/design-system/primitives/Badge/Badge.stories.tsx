@@ -1,0 +1,123 @@
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { Badge } from "./Badge";
+
+const meta = {
+  title: "Design System/Primitives/Badge",
+  component: Badge,
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component:
+          "A flexible badge component for displaying small pieces of information with different variants and sizes.",
+      },
+    },
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    variant: {
+      control: "select",
+      options: ["default", "primary", "success", "warning", "error", "tech"],
+      description: "The visual style variant of the badge",
+    },
+    size: {
+      control: "select",
+      options: ["sm", "md", "lg"],
+      description: "The size of the badge",
+    },
+    techName: {
+      control: "text",
+      description: "Technology name for tech variant (enables dynamic coloring)",
+      if: { arg: "variant", eq: "tech" },
+    },
+    children: {
+      control: "text",
+      description: "The content of the badge",
+    },
+  },
+} satisfies Meta<typeof Badge>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    children: "Default Badge",
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: "Primary Badge",
+    variant: "primary",
+  },
+};
+
+export const Semantic: Story = {
+  args: {
+    children: "Semantic",
+  },
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="error">Error</Badge>
+    </div>
+  ),
+};
+
+export const Sizes: Story = {
+  args: {
+    children: "Size",
+  },
+  render: () => (
+    <div className="flex items-center gap-2">
+      <Badge size="sm">Small</Badge>
+      <Badge size="md">Medium</Badge>
+      <Badge size="lg">Large</Badge>
+    </div>
+  ),
+};
+
+export const TechStack: Story = {
+  args: {
+    children: "Tech",
+  },
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="tech" techName="React">
+        React
+      </Badge>
+      <Badge variant="tech" techName="TypeScript">
+        TypeScript
+      </Badge>
+      <Badge variant="tech" techName="Next.js">
+        Next.js
+      </Badge>
+      <Badge variant="tech" techName="Tailwind CSS">
+        Tailwind CSS
+      </Badge>
+      <Badge variant="tech" techName="Node.js">
+        Node.js
+      </Badge>
+      <Badge variant="tech" techName="Firebase">
+        Firebase
+      </Badge>
+    </div>
+  ),
+};
+
+export const Interactive: Story = {
+  args: {
+    children: "Hover me!",
+    variant: "primary",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Badges include hover and focus states for accessibility.",
+      },
+    },
+  },
+};

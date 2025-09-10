@@ -172,7 +172,9 @@ export default function FreelanceProjects({
 
         {/* Project Details Panel */}
         <div className="lg:col-span-2">
-          <FreelanceProjectDetails project={projects[selectedProjectIndex]} theme={theme} />
+          {projects[selectedProjectIndex] && (
+            <FreelanceProjectDetails project={projects[selectedProjectIndex]} theme={theme} />
+          )}
         </div>
       </div>
 

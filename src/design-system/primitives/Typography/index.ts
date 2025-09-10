@@ -1,0 +1,15 @@
+export {
+  Typography,
+  Heading,
+  Text,
+  Code,
+  Caption,
+  Lead,
+  Muted,
+  Blockquote,
+  type TypographyProps,
+  type TypographyVariant,
+  type TypographyColor,
+  type TypographyAlign,
+  type TypographyTransform,
+} from "./Typography";
