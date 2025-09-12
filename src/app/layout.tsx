@@ -4,6 +4,7 @@ import "./globals.css";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
 import { fontClassNames } from "@/config/fonts";
 import { QueryProvider } from "@/state/providers/QueryProvider";
+import { SkipLinks } from "@/components/ui/skip-link";
 
 export const metadata: Metadata = {
   title: "Kamran - Front End Engineer",
@@ -36,6 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontClassNames}>
       <body className="bg-black font-sans antialiased">
+        {/* Skip links for keyboard navigation */}
+        <SkipLinks />
+
         {/* Using font-sans from design tokens */}
         <QueryProvider>
           <WebVitalsReporter />

@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./i18n.ts");
 
 // Bundle analyzer setup for performance optimization
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -44,4 +47,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(nextConfig);
+export default withNextIntl(withBundleAnalyzer(nextConfig));

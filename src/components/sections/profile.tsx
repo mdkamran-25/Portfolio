@@ -33,18 +33,18 @@ export default function Profile() {
 
       {/* Info badges */}
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-2 rounded-full bg-neutral-800/50 px-3 py-1.5">
+        <div className="bg-neutral-800/50 flex flex-wrap items-center gap-2 rounded-full px-3 py-1.5">
           <Globe className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" />
           <span className="text-xs text-neutral-400 sm:text-sm">English, Hindi</span>
           <span className="text-xs text-neutral-400">🇮🇳 Greter Noida, India</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 rounded-full bg-neutral-800/50 px-3 py-1.5">
+        <div className="bg-neutral-800/50 flex flex-wrap items-center gap-2 rounded-full px-3 py-1.5">
           <BrainCircuit className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" />
-          <span className="text-xs text-neutral-400 sm:text-sm">Computer Science, 3rd year</span>
+          <span className="text-xs text-neutral-400 sm:text-sm">Computer Science, final year</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 rounded-full bg-neutral-800/50 px-3 py-1.5">
+        <div className="bg-neutral-800/50 flex flex-wrap items-center gap-2 rounded-full px-3 py-1.5">
           <GraduationCap className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" />
           <span className="text-xs text-neutral-400 sm:text-sm">
             Undergrad Student, @Sharda University
@@ -63,7 +63,7 @@ export default function Profile() {
           onClick={() =>
             window.open("https://github.com/mdkamran-25", "_blank", "noopener,noreferrer")
           }
-          className="flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
+          className="bg-neutral-800/50 hover:bg-neutral-700/50 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs text-white transition-colors sm:px-6 sm:py-2 sm:text-sm"
         >
           <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           GitHub
@@ -77,7 +77,7 @@ export default function Profile() {
               "noopener,noreferrer"
             )
           }
-          className="flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
+          className="bg-neutral-800/50 hover:bg-neutral-700/50 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs text-white transition-colors sm:px-6 sm:py-2 sm:text-sm"
         >
           <SiNotion className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Projects...
@@ -97,7 +97,7 @@ export default function Profile() {
             // Remove the link from the body
             document.body.removeChild(link);
           }}
-          className="flex items-center gap-2 rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-white transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
+          className="bg-neutral-800/50 hover:bg-neutral-700/50 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs text-white transition-colors sm:px-6 sm:py-2 sm:text-sm"
         >
           <FileUser className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Download CV

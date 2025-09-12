@@ -1,17 +1,16 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
+import { AccessibleButton } from "@/components/ui/enhanced-dialog";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from "@/components/ui/enhanced-dialog";
 import type {
   RazorpayOptions,
   RazorpayResponse,
@@ -273,8 +272,8 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
             document.body.classList.add("razorpay-open");
 
             // Inject mobile-specific CSS for close button visibility
-            const mobileCloseButtonStyle = document.createElement('style');
-            mobileCloseButtonStyle.id = 'razorpay-mobile-close-style';
+            const mobileCloseButtonStyle = document.createElement("style");
+            mobileCloseButtonStyle.id = "razorpay-mobile-close-style";
             mobileCloseButtonStyle.textContent = `
               /* Ensure close button is visible on mobile */
               .razorpay-checkout-frame {
@@ -315,13 +314,13 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
                 }
               }
             `;
-            
+
             // Remove existing style if present
-            const existingStyle = document.getElementById('razorpay-mobile-close-style');
+            const existingStyle = document.getElementById("razorpay-mobile-close-style");
             if (existingStyle) {
               existingStyle.remove();
             }
-            
+
             document.head.appendChild(mobileCloseButtonStyle);
 
             // Force focus on document body to ensure proper event handling
@@ -335,7 +334,7 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
           const handleRazorpayClose = () => {
             document.body.classList.remove("razorpay-open");
             // Clean up injected mobile styles
-            const mobileStyle = document.getElementById('razorpay-mobile-close-style');
+            const mobileStyle = document.getElementById("razorpay-mobile-close-style");
             if (mobileStyle) {
               mobileStyle.remove();
             }
@@ -404,7 +403,7 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
   // Memoize dialog content to prevent unnecessary re-renders
   const dialogContent = useMemo(
     () => (
-      <DialogContent className="border-orange-200 bg-white sm:max-w-md dark:border-orange-800 dark:bg-neutral-900">
+      <>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-orange-600 dark:text-orange-500">
             Support My Work
@@ -438,34 +437,33 @@ const RazorpayPayment: React.FC<RazorpayPaymentProps> = React.memo(function Razo
               <line x1="14" y1="1" x2="14" y2="4"></line>
             </svg>
           </div>
-          <Button
+          <AccessibleButton
             onClick={handlePayment}
             disabled={isLoading || !isScriptLoaded}
-            className="w-full rounded-lg bg-orange-500 py-3 font-semibold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-orange-900 py-3 font-semibold text-white transition-colors hover:bg-orange-800 disabled:cursor-not-allowed disabled:opacity-50"
+            loading={isLoading}
+            loadingText={!isScriptLoaded ? "Loading Payment System..." : "Processing..."}
           >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Processing...
-              </>
-            ) : !isScriptLoaded ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Loading Payment System...
-              </>
-            ) : (
-              "Proceed to Payment"
-            )}
-          </Button>
+            {!isLoading && isScriptLoaded && "Proceed to Payment"}
+          </AccessibleButton>
         </div>
-      </DialogContent>
+      </>
     ),
     [amount, isLoading, isScriptLoaded, handlePayment]
   );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      {dialogContent}
+      <DialogContent
+        isOpen={isOpen}
+        onOpenChange={onClose}
+        title="Payment Details"
+        description="Complete your payment securely"
+        closeButtonLabel="Close payment dialog"
+        className="border-orange-200 bg-white sm:max-w-md dark:border-orange-800 dark:bg-neutral-900"
+      >
+        {dialogContent}
+      </DialogContent>
     </Dialog>
   );
 });

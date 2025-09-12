@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React from "react";
 
 // These imports will be used in future updates
 // import Image from 'next/image';
@@ -15,30 +15,30 @@ import SupportWork from "@/components/sections/support-work";
 export default function Home() {
   return (
     <MainLayout>
-      <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
+      <main id="main-content" className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
         {/* First row: Profile and Stack side by side */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-          <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+          <div className="bg-neutral-900/50 rounded-2xl p-4 sm:p-6">
             <Profile />
           </div>
-          <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+          <div className="bg-neutral-900/50 rounded-2xl p-4 sm:p-6">
             <Stack />
           </div>
         </div>
 
         {/* Second row: Projects */}
-        <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+        <div className="bg-neutral-900/50 rounded-2xl p-4 sm:p-6">
           <FreelanceProjects theme="default" title="$ Freelance" />
         </div>
-        <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+        <div className="bg-neutral-900/50 rounded-2xl p-4 sm:p-6">
           <Projects theme="alternative" title="Featured Projects ..." />
         </div>
 
         {/* Support Work Section */}
-        <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+        <div className="bg-neutral-900/50 rounded-2xl p-4 sm:p-6">
           <SupportWork />
         </div>
-      </div>
+      </main>
     </MainLayout>
   );
 }

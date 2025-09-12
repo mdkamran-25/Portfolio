@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects", 
+    "contact": "Contact",
+    "pricing": "Pricing"
+  },
+  "hero": {
+    "title": "Hi, I'm Mohammad Kamran",
+    "subtitle": "Frontend Developer & UI/UX Designer",
+    "description": "I create exceptional digital experiences through modern web technologies. Specializing in React, Next.js, and user-centered design.",
+    "cta": {
+      "projects": "View My Work",
+      "contact": "Get In Touch"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Passionate developer creating digital solutions",
+    "description": "With expertise in modern web technologies and a keen eye for design, I transform ideas into engaging digital experiences. I specialize in frontend development, UI/UX design, and creating scalable web applications.",
+    "skills": {
+      "title": "Technical Skills",
+      "frontend": "Frontend Development",
+      "backend": "Backend Development", 
+      "design": "UI/UX Design",
+      "tools": "Development Tools"
+    }
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "A showcase of my recent work",
+    "viewProject": "View Project",
+    "liveDemo": "Live Demo",
+    "sourceCode": "Source Code",
+    "categories": {
+      "all": "All Projects",
+      "web": "Web Applications",
+      "mobile": "Mobile Apps",
+      "design": "UI/UX Design"
+    }
+  },
+  "freelance": {
+    "title": "Freelance Services",
+    "subtitle": "Professional web development solutions",
+    "rating": "rating",
+    "reviews": "reviews",
+    "starting": "Starting from",
+    "viewDetails": "View Details",
+    "bookNow": "Book Now"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Let's discuss your project",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message"
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Phone", 
+      "location": "Location"
+    }
+  },
+  "footer": {
+    "description": "Frontend Developer & UI/UX Designer creating exceptional digital experiences.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "connect": "Connect",
+    "copyright": "© 2024 Mohammad Kamran. All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "close": "Close",
+    "open": "Open",
+    "next": "Next",
+    "previous": "Previous",
+    "skipToContent": "Skip to main content",
+    "menu": "Menu"
+  },
+  "seo": {
+    "home": {
+      "title": "Mohammad Kamran - Frontend Developer & UI/UX Designer",
+      "description": "Experienced frontend developer specializing in React, Next.js, and modern web technologies. Creating exceptional digital experiences through user-centered design."
+    },
+    "about": {
+      "title": "About - Mohammad Kamran",
+      "description": "Learn more about Mohammad Kamran, a passionate frontend developer and UI/UX designer with expertise in modern web technologies."
+    },
+    "projects": {
+      "title": "Projects - Mohammad Kamran",
+      "description": "Explore my portfolio of web applications, mobile apps, and UI/UX design projects showcasing modern development practices."
+    },
+    "contact": {
+      "title": "Contact - Mohammad Kamran", 
+      "description": "Get in touch to discuss your web development project. Professional frontend development and UI/UX design services."
+    }
+  }
+}

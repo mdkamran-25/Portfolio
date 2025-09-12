@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "projects": "Projets", 
+    "contact": "Contact",
+    "pricing": "Tarifs"
+  },
+  "hero": {
+    "title": "Salut, je suis Mohammad Kamran",
+    "subtitle": "Développeur Frontend et Concepteur UI/UX",
+    "description": "Je crée des expériences numériques exceptionnelles grâce aux technologies web modernes. Spécialisé en React, Next.js et conception centrée sur l'utilisateur.",
+    "cta": {
+      "projects": "Voir Mon Travail",
+      "contact": "Entrer en Contact"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Quelque chose s'est mal passé",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "open": "Ouvrir",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "skipToContent": "Aller au contenu principal",
+    "menu": "Menu"
+  }
+}

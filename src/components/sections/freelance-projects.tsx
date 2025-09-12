@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
+import { List, ListItem } from "@/design-system/primitives/List";
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
 
@@ -50,7 +51,7 @@ const FreelanceProjectDetails: React.FC<FreelanceProjectDetailsProps> = ({
     return [...Array(5)].map((_, index) => (
       <svg
         key={index}
-        className={`h-5 w-5 ${index < rating ? "text-yellow-400" : "text-neutral-600"}`}
+        className={`h-5 w-5 ${index < rating ? "text-yellow-400" : "text-neutral-400"}`}
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -159,16 +160,21 @@ export default function FreelanceProjects({
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Project Selection */}
         <div className="lg:col-span-1">
-          <div className="grid grid-cols-1 gap-4">
+          <List
+            label="Freelance project showcase"
+            description="Browse through completed freelance projects"
+            className="grid grid-cols-1 gap-4"
+          >
             {projects.map((project, index) => (
-              <ProjectCard
-                key={index}
-                project={project}
-                theme={theme}
-                onClick={() => setSelectedProjectIndex(index)}
-              />
+              <ListItem key={project.id} index={index} total={projects.length}>
+                <ProjectCard
+                  project={project}
+                  theme={theme}
+                  onClick={() => setSelectedProjectIndex(index)}
+                />
+              </ListItem>
             ))}
-          </div>
+          </List>
         </div>
 
         {/* Project Details Panel */}
@@ -185,7 +191,7 @@ export default function FreelanceProjects({
           href="https://spring-mars-7c5.notion.site/Welcome-1868ac9f1d858023a5ddf222dacf5051"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full bg-neutral-800/50 px-4 py-1.5 text-xs text-orange-500 transition-colors hover:bg-neutral-700/50 sm:px-6 sm:py-2 sm:text-sm"
+          className="rounded-full bg-neutral-800 px-4 py-1.5 text-xs text-orange-500 transition-colors hover:bg-neutral-700 sm:px-6 sm:py-2 sm:text-sm"
         >
           View All Projects
         </a>
