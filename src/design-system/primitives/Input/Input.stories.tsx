@@ -205,7 +205,7 @@ export const WithIcons: Story = {
 };
 
 export const CharacterCount: Story = {
-  render: () => {
+  render: function CharacterCountRender() {
     const [value, setValue] = useState("");
 
     return (
@@ -251,7 +251,7 @@ export const CharacterCount: Story = {
 };
 
 export const InteractiveForm: Story = {
-  render: () => {
+  render: function InteractiveFormRender() {
     const [formData, setFormData] = useState({
       email: "",
       password: "",
@@ -431,7 +431,7 @@ export const TextareaVariants: Story = {
 };
 
 export const TextareaWithValidation: Story = {
-  render: () => {
+  render: function TextareaWithValidationRender() {
     const [message, setMessage] = useState("");
     const maxLength = 200;
 

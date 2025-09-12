@@ -4,9 +4,10 @@
  * Tests for WCAG 2.1 AA compliant focus management utilities
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { fireEvent, waitFor } from "@testing-library/react";
 import { renderHook, act } from "@testing-library/react";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+
 import { useFocusTrap, useAnnouncer, useAutoFocus } from "@/shared/hooks/useFocusManagement";
 
 // Setup proper DOM environment

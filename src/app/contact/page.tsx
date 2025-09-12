@@ -51,6 +51,7 @@ const Contact = () => {
         throw new Error(data.error || "Failed to send message");
       }
     } catch (error) {
+      console.error("Contact form submission error:", error);
       setStatus({
         type: "error",
         message: "Failed to send message. Please try again later.",
@@ -219,7 +220,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
-                  className="focus:border-primary-500 w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-2 text-white focus:outline-none"
+                  className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-2 text-white focus:border-primary-500 focus:outline-none"
                   placeholder="Your message"
                   required
                 />

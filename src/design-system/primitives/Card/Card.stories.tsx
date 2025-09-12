@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import Image from "next/image";
 
 import { Button } from "../Button";
 
@@ -176,11 +177,14 @@ export const ProjectShowcase: Story = {
           <CardDescription>Full-stack marketplace with payment integration</CardDescription>
         </CardHeader>
         <CardContent>
-          <img
-            src="/api/placeholder/300/150"
-            alt="E-commerce Platform"
-            className="mb-3 h-32 w-full rounded object-cover"
-          />
+          <div className="relative mb-3 h-32 w-full">
+            <Image
+              src="/api/placeholder/300/150"
+              alt="E-commerce Platform"
+              fill
+              className="rounded object-cover"
+            />
+          </div>
           <div className="mb-3 flex flex-wrap gap-1">
             <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-800">Next.js</span>
             <span className="rounded bg-green-100 px-2 py-1 text-xs text-green-800">Node.js</span>
@@ -201,11 +205,14 @@ export const ProjectShowcase: Story = {
           <CardDescription>React Native app with real-time analytics</CardDescription>
         </CardHeader>
         <CardContent>
-          <img
-            src="/api/placeholder/300/150"
-            alt="Mobile Dashboard"
-            className="mb-3 h-32 w-full rounded object-cover"
-          />
+          <div className="relative mb-3 h-32 w-full">
+            <Image
+              src="/api/placeholder/300/150"
+              alt="Mobile Dashboard"
+              fill
+              className="rounded object-cover"
+            />
+          </div>
           <div className="mb-3 flex flex-wrap gap-1">
             <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-800">
               React Native
@@ -230,11 +237,14 @@ export const ProjectShowcase: Story = {
           <CardDescription>Component library with Storybook documentation</CardDescription>
         </CardHeader>
         <CardContent>
-          <img
-            src="/api/placeholder/300/150"
-            alt="Design System"
-            className="mb-3 h-32 w-full rounded object-cover"
-          />
+          <div className="relative mb-3 h-32 w-full">
+            <Image
+              src="/api/placeholder/300/150"
+              alt="Design System"
+              fill
+              className="rounded object-cover"
+            />
+          </div>
           <div className="mb-3 flex flex-wrap gap-1">
             <span className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-800">React</span>
             <span className="rounded bg-orange-100 px-2 py-1 text-xs text-orange-800">

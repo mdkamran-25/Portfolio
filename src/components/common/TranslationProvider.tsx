@@ -6,8 +6,8 @@
  */
 "use client";
 
-import React, { createContext, useContext } from "react";
 import { useTranslations } from "next-intl";
+import React, { createContext, useContext } from "react";
 
 interface TranslationContextType {
   t: ReturnType<typeof useTranslations>;

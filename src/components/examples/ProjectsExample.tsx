@@ -7,6 +7,7 @@
 
 "use client";
 
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 import { useApplicationService } from "../../shared/services/application-service";
@@ -147,10 +148,11 @@ function ProjectCard({ project, featured }: ProjectCardProps) {
     >
       {/* Project Image */}
       <div className="relative aspect-video bg-gray-200">
-        <img
+        <Image
           src={project.image}
           alt={project.title}
-          className="h-full w-full object-cover"
+          fill
+          className="object-cover"
           onError={(e) => {
             // Fallback for broken images
             e.currentTarget.src = "/placeholder-project.jpg";

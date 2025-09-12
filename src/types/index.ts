@@ -93,7 +93,7 @@ export interface PaymentDetails {
   amount: number;
   currency: "USD" | "EUR" | "GBP" | "INR";
   description: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface PaymentResult {

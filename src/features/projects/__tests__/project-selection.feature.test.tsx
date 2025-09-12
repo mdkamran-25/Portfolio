@@ -13,7 +13,20 @@ import ProjectsPage from "@/app/projects/page";
 
 // Mock Next.js Image component
 vi.mock("next/image", () => ({
-  default: ({ src, alt, ...props }: any) => <img src={src} alt={alt} {...props} />,
+  default: ({
+    src,
+    alt,
+    fill,
+    ...props
+  }: {
+    src?: string;
+    alt?: string;
+    fill?: boolean;
+    [key: string]: unknown;
+  }) => {
+    const imgProps = fill ? { alt, ...props } : { src, alt, ...props };
+    return <img {...imgProps} data-testid="next-image" />;
+  },
 }));
 
 // Mock the MainLayout component
@@ -25,7 +38,19 @@ vi.mock("@/components/layout/MainLayout", () => ({
 
 // Mock the RazorpayPayment component
 vi.mock("@/components/RazorpayPayment", () => ({
-  RazorpayPayment: ({ isOpen, onClose, amount, onSuccess, onError }: any) =>
+  RazorpayPayment: ({
+    isOpen,
+    onClose,
+    amount,
+    onSuccess,
+    onError,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    amount: number;
+    onSuccess: (data: { razorpay_payment_id: string }) => void;
+    onError: (error: unknown) => void;
+  }) =>
     isOpen ? (
       <div data-testid="payment-modal" role="dialog">
         <h2>Payment Modal</h2>

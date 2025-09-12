@@ -3,6 +3,7 @@
  */
 import { render, screen, fireEvent } from "@testing-library/react";
 import { vi, describe, beforeEach, afterEach, it, expect } from "vitest";
+
 import { LanguageSwitcher } from "../../../components/common/LanguageSwitcher";
 
 // Mock next-intl

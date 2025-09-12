@@ -7,6 +7,7 @@
 
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -98,7 +99,7 @@ type Story = StoryObj<typeof meta>;
  * Basic dialog with standard accessibility features
  */
 export const BasicDialog: Story = {
-  render: () => {
+  render: function BasicDialogRender() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -159,7 +160,7 @@ export const BasicDialog: Story = {
  * Dialog with form validation and error handling
  */
 export const FormValidationDialog: Story = {
-  render: () => {
+  render: function FormValidationDialogRender() {
     const [isOpen, setIsOpen] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
@@ -286,7 +287,7 @@ export const FormValidationDialog: Story = {
  * Confirmation dialog with destructive action
  */
 export const ConfirmationDialog: Story = {
-  render: () => {
+  render: function ConfirmationDialogRender() {
     const [isOpen, setIsOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -354,7 +355,7 @@ export const ConfirmationDialog: Story = {
  * Dialog with complex content and scrolling
  */
 export const ScrollableDialog: Story = {
-  render: () => {
+  render: function ScrollableDialogRender() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (

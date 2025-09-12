@@ -37,7 +37,7 @@ export const AccessibleList = React.forwardRef<
         </p>
       )}
       <Element
-        ref={ref as any} // Type assertion needed for polymorphic component
+        ref={ref as unknown as React.Ref<any>} // Type assertion needed for polymorphic component
         className={cn(
           // Reset default list styles
           "m-0 list-none p-0",

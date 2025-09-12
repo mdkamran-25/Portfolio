@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
-import "./globals.css";
+import { SkipLinks } from "@/components/ui/skip-link";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
 import { fontClassNames } from "@/config/fonts";
 import { QueryProvider } from "@/state/providers/QueryProvider";
-import { SkipLinks } from "@/components/ui/skip-link";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Kamran - Front End Engineer",

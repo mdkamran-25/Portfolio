@@ -6,8 +6,9 @@
  */
 "use client";
 
-import React, { useState } from "react";
 import { useLocale } from "next-intl";
+import React, { useState } from "react";
+
 import { locales, localeLabels, localeFlags, type Locale } from "../../config/i18n";
 
 interface LanguageSwitcherProps {

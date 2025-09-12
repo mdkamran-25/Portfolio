@@ -3,9 +3,9 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-import { List, ListItem } from "@/design-system/primitives/List";
 import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
+import { List, ListItem } from "@/design-system/primitives/List";
 
 // Project Card Component
 interface ProjectCardProps {
