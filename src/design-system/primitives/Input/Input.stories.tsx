@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+
 import { Input, Textarea } from "./Input";
 
 // Mock icons for stories

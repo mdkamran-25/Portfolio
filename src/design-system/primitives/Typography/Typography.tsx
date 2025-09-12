@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef, type ElementType, type ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 const typographyVariants = cva("", {

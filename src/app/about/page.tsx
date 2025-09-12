@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
 import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
+
 import MainLayout from '@/components/layout/MainLayout';
 
 const AboutPage = () => {

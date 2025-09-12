@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/design-system/primitives";
 import { Button } from "@/design-system/primitives/Button";
 import { Input } from "@/design-system/primitives/Input";
 import { Typography } from "@/design-system/primitives/Typography";
-import { Card, CardContent, CardHeader, CardTitle } from "@/design-system/primitives";
 
 const Contact = () => {
   const [formData, setFormData] = useState({

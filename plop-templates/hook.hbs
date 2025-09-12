@@ -1,0 +1,41 @@
+import { useCallback, useEffect, useState } from 'react';
+
+/**
+ * use{{pascalCase name}} Hook
+ * 
+ * Custom hook for {{camelCase name}} functionality.
+ * 
+ * @returns Hook state and actions
+ */
+export function use{{pascalCase name}}() {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Add your hook logic here
+  const initialize = useCallback(() => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Add your initialization logic here
+      setData({});
+      setLoading(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
+  return {
+    data,
+    loading,
+    error,
+    initialize,
+    // Add more hook actions here
+  };
+}

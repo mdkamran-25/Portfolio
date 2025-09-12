@@ -1,5 +1,5 @@
-import { Project, FreelanceProject, ProjectFilters, SortOptions, PaginationOptions } from "@/types";
 import { appConfig } from "@/config";
+import { Project, FreelanceProject, ProjectFilters, SortOptions, PaginationOptions } from "@/types";
 
 /**
  * Project Repository - handles all project data operations

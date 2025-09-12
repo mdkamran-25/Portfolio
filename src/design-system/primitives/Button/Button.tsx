@@ -3,8 +3,9 @@
  * Enterprise-grade button with full accessibility and variant support
  */
 
-import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
+
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -58,6 +59,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             fill="none"
             viewBox="0 0 24 24"
             aria-hidden="true"
+            data-testid="button-spinner"
           >
             <circle
               className="opacity-25"

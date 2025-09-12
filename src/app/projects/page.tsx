@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { Project, featuredProjects } from '@/constants/projects';
+import Image from "next/image";
+import React, { useState } from "react";
+
+import MainLayout from "@/components/layout/MainLayout";
+import { RazorpayPaymentDynamic as RazorpayPayment } from "@/components/RazorpayPayment.dynamic";
+import { Project, featuredProjects } from "@/constants/projects";
 // These will be used for future theme customization
 // import { ThemeType, getThemeColors } from '@/constants/theme';
-import { RazorpayPayment } from '@/components/RazorpayPayment';
-import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
-import MainLayout from '@/components/layout/MainLayout';
+import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
 
 const ProjectsPage = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -15,12 +16,12 @@ const ProjectsPage = () => {
   const SUPPORT_AMOUNT = 99; // Fixed amount for project support
 
   const handlePaymentSuccess = (response: RazorpayResponse) => {
-    console.log('Payment successful:', response);
+    console.log("Payment successful:", response);
     // Handle successful payment
   };
 
   const handlePaymentError = (error: RazorpayError) => {
-    console.error('Payment failed:', error);
+    console.error("Payment failed:", error);
     // Handle payment error
   };
 
@@ -49,9 +50,7 @@ const ProjectsPage = () => {
 
               {/* Project Content */}
               <div className="p-6">
-                <h2 className="mb-2 text-xl font-semibold text-white">
-                  {project.title}
-                </h2>
+                <h2 className="mb-2 text-xl font-semibold text-white">{project.title}</h2>
                 <p className="mb-4 text-neutral-400">{project.description}</p>
 
                 {/* Tech Stack */}
@@ -117,4 +116,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage; 
+export default ProjectsPage;

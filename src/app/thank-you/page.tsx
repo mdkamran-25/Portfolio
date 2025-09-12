@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { CheckCircle, Heart, Gift } from 'lucide-react';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+
+import MainLayout from '@/components/layout/MainLayout';
 
 const ThankYouPage = () => {
   const [mounted, setMounted] = useState(false);

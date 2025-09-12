@@ -84,7 +84,12 @@ export default {
       },
       spacing: designTokens.spacing,
       borderRadius: designTokens.borderRadius,
-      fontFamily: designTokens.fontFamily,
+      fontFamily: {
+        ...designTokens.fontFamily,
+        // Override with next/font CSS variables
+        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
+      },
       fontSize: designTokens.fontSize,
       fontWeight: designTokens.fontWeight,
       boxShadow: designTokens.boxShadow,

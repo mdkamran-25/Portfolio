@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
+
 import { Typography, Heading, Text, Code, Caption, Lead, Muted, Blockquote } from "./Typography";
 
 describe("Typography", () => {

@@ -1,0 +1,92 @@
+import type { 
+  {{pascalCase name}}Data, 
+  {{pascalCase name}}ApiResponse,
+  {{pascalCase name}}CreateRequest,
+  {{pascalCase name}}UpdateRequest 
+} from '../types';
+
+/**
+ * {{pascalCase name}} Service
+ * 
+ * API service layer for {{pascalCase name}} feature operations.
+ */
+export class {{pascalCase name}}Service {
+  private static readonly baseUrl = '/api/{{kebabCase name}}s';
+
+  /**
+   * Get all {{camelCase name}}s
+   */
+  static async getAll(): Promise<{{pascalCase name}}ApiResponse> {
+    const response = await fetch(this.baseUrl);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch {{camelCase name}}s: ${response.statusText}`);
+    }
+    
+    return response.json();
+  }
+
+  /**
+   * Get {{camelCase name}} by ID
+   */
+  static async getById(id: string): Promise<{{pascalCase name}}Data> {
+    const response = await fetch(`${this.baseUrl}/${id}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch {{camelCase name}}: ${response.statusText}`);
+    }
+    
+    return response.json();
+  }
+
+  /**
+   * Create new {{camelCase name}}
+   */
+  static async create(data: {{pascalCase name}}CreateRequest): Promise<{{pascalCase name}}Data> {
+    const response = await fetch(this.baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to create {{camelCase name}}: ${response.statusText}`);
+    }
+    
+    return response.json();
+  }
+
+  /**
+   * Update {{camelCase name}}
+   */
+  static async update(data: {{pascalCase name}}UpdateRequest): Promise<{{pascalCase name}}Data> {
+    const response = await fetch(`${this.baseUrl}/${data.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to update {{camelCase name}}: ${response.statusText}`);
+    }
+    
+    return response.json();
+  }
+
+  /**
+   * Delete {{camelCase name}}
+   */
+  static async delete(id: string): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to delete {{camelCase name}}: ${response.statusText}`);
+    }
+  }
+}

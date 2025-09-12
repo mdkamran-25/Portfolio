@@ -1,0 +1,58 @@
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+
+import type { {{pascalCase name}}State, {{pascalCase name}}Actions, {{pascalCase name}}Data } from '../types';
+{{#if withApi}}
+import { {{pascalCase name}}Service } from '../services/{{camelCase name}}.service';
+{{/if}}
+
+interface {{pascalCase name}}Store extends {{pascalCase name}}State, {{pascalCase name}}Actions {}
+
+/**
+ * {{pascalCase name}} Zustand Store
+ * 
+ * Manages state for the {{pascalCase name}} feature.
+ */
+export const use{{pascalCase name}}Store = create<{{pascalCase name}}Store>()(
+  devtools(
+    (set, get) => ({
+      // Initial state
+      data: [],
+      loading: false,
+      error: null,
+      selectedId: null,
+
+      // Actions
+      fetch{{pascalCase name}}s: async () => {
+        set({ loading: true, error: null });
+        
+        try {
+          {{#if withApi}}
+          const response = await {{pascalCase name}}Service.getAll();
+          set({ data: response.data, loading: false });
+          {{else}}
+          // Simulate API call
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          set({ data: [], loading: false });
+          {{/if}}
+        } catch (error) {
+          set({ 
+            error: error instanceof Error ? error.message : 'Unknown error',
+            loading: false 
+          });
+        }
+      },
+
+      select{{pascalCase name}}: (id: string) => {
+        set({ selectedId: id });
+      },
+
+      clear{{pascalCase name}}s: () => {
+        set({ data: [], selectedId: null, error: null });
+      },
+    }),
+    {
+      name: '{{kebabCase name}}-store',
+    }
+  )
+);

@@ -8,6 +8,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import { useApplicationService } from "../../shared/services/application-service";
 import type { Project, ProjectStats } from "../../shared/services/application-service";
 

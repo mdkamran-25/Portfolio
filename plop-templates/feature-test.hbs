@@ -1,0 +1,59 @@
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { {{pascalCase name}} } from '../components/{{pascalCase name}}';
+
+// Mock dependencies
+{{#if withApi}}
+jest.mock('../services/{{camelCase name}}.service');
+{{/if}}
+
+describe('{{pascalCase name}} Feature', () => {
+  beforeEach(() => {
+    // Reset mocks and stores before each test
+    jest.clearAllMocks();
+  });
+
+  it('renders the {{pascalCase name}} component', () => {
+    render(<{{pascalCase name}} />);
+    
+    expect(screen.getByText('{{pascalCase name}} Feature')).toBeInTheDocument();
+    expect(
+      screen.getByText('This is the main component for the {{pascalCase name}} feature.')
+    ).toBeInTheDocument();
+  });
+
+  {{#if withState}}
+  it('handles loading state correctly', async () => {
+    render(<{{pascalCase name}} />);
+    
+    // Add your loading state tests here
+    // Example: expect loading indicators to appear/disappear
+  });
+
+  it('handles error state correctly', async () => {
+    render(<{{pascalCase name}} />);
+    
+    // Add your error state tests here
+    // Example: simulate API error and verify error handling
+  });
+  {{/if}}
+
+  {{#if withApi}}
+  it('fetches data on mount', async () => {
+    render(<{{pascalCase name}} />);
+    
+    // Add your data fetching tests here
+    // Example: verify service methods are called
+  });
+  {{/if}}
+
+  // Add more feature-specific tests here
+  it('handles user interactions correctly', async () => {
+    const user = userEvent.setup();
+    render(<{{pascalCase name}} />);
+    
+    // Add your interaction tests here
+    // Example: click buttons, fill forms, etc.
+  });
+});

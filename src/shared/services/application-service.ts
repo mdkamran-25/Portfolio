@@ -5,11 +5,12 @@
  * providing a bridge between the new domain models and existing components.
  */
 
-import { ProjectService, FreelanceProjectService, ServiceFactory } from "./project-service";
+import { featuredProjects, freelanceProjects } from "../../constants/projects";
 import { Project, FreelanceProject } from "../domain/models";
 
+import { ProjectService, FreelanceProjectService, ServiceFactory } from "./project-service";
+
 // Import existing project data
-import { featuredProjects, freelanceProjects } from "../../constants/projects";
 
 /**
  * Main Application Service

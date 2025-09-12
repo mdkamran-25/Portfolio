@@ -6,8 +6,8 @@
  */
 
 import { Project, FreelanceProject, ProjectDomainService } from "../domain/models";
-import { ProjectMapper, FreelanceProjectMapper } from "../mappers/project-mapper";
 import { RawProjectDataType, RawFreelanceProjectDataType } from "../domain/schemas";
+import { ProjectMapper, FreelanceProjectMapper } from "../mappers/project-mapper";
 
 /**
  * Repository interface for projects

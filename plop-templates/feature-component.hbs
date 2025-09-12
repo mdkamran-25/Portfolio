@@ -1,0 +1,35 @@
+'use client';
+
+import React from 'react';
+
+import { {{pascalCase name}}Service } from '../services/{{camelCase name}}.service';
+{{#if withState}}
+import { use{{pascalCase name}}Store } from '../store/{{camelCase name}}.store';
+{{/if}}
+import type { {{pascalCase name}}Props } from '../types';
+
+/**
+ * {{pascalCase name}} feature component
+ * 
+ * Main component for the {{pascalCase name}} feature module.
+ */
+export const {{pascalCase name}}: React.FC<{{pascalCase name}}Props> = (props) => {
+  {{#if withState}}
+  const { data, loading, error, actions } = use{{pascalCase name}}Store();
+  {{/if}}
+
+  return (
+    <div className="{{kebabCase name}}-feature">
+      <h1 className="text-2xl font-bold">{{pascalCase name}} Feature</h1>
+      <p className="text-gray-600">
+        This is the main component for the {{pascalCase name}} feature.
+      </p>
+      
+      {/* Add your feature implementation here */}
+    </div>
+  );
+};
+
+{{pascalCase name}}.displayName = '{{pascalCase name}}';
+
+export default {{pascalCase name}};

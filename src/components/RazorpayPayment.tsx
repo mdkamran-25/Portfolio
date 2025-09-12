@@ -1,6 +1,10 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +12,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
 import type {
   RazorpayOptions,
   RazorpayResponse,

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { Globe, GraduationCap, Github, BrainCircuit, FileUser } from "lucide-react";
+import Image from "next/image";
 import { SiNotion } from "react-icons/si";
 
 // Profile Component

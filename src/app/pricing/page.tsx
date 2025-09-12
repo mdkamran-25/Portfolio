@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import MainLayout from '@/components/layout/MainLayout';
-import { Check } from 'lucide-react';
-import { RazorpayPayment } from '@/components/RazorpayPayment';
-import { useRouter } from 'next/navigation';
-import type { RazorpayResponse, RazorpayError } from '@/types/razorpay';
+import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+
+import MainLayout from "@/components/layout/MainLayout";
+import { RazorpayPaymentDynamic as RazorpayPayment } from "@/components/RazorpayPayment.dynamic";
+import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
 
 interface PricingPackage {
   name: string;
@@ -20,65 +21,56 @@ const PricingPage = () => {
 
   const pricingPlans = [
     {
-      name: 'Basic',
+      name: "Basic",
       price: 99,
-      features: [
-        'Basic support',
-        'Access to basic features',
-        'Email support',
-      ],
+      features: ["Basic support", "Access to basic features", "Email support"],
     },
     {
-      name: 'Pro',
+      name: "Pro",
       price: 199,
-      features: [
-        'Priority support',
-        'Access to all features',
-        '24/7 support',
-        'Custom solutions',
-      ],
+      features: ["Priority support", "Access to all features", "24/7 support", "Custom solutions"],
     },
     {
-      name: 'Enterprise',
+      name: "Enterprise",
       price: 499,
       features: [
-        'Dedicated support',
-        'Custom development',
-        'Priority updates',
-        'Training sessions',
+        "Dedicated support",
+        "Custom development",
+        "Priority updates",
+        "Training sessions",
       ],
     },
   ];
 
   const handlePaymentSuccess = (response: RazorpayResponse) => {
-    console.log('Payment successful:', response);
+    console.log("Payment successful:", response);
     setIsPaymentModalOpen(false);
     setSelectedPackage(null);
-    
+
     // Redirect to thank you page after successful payment
-    router.push('/thank-you');
+    router.push("/thank-you");
   };
 
   const handlePaymentError = (error: RazorpayError) => {
-    console.error('Payment failed:', error);
+    console.error("Payment failed:", error);
   };
 
   return (
     <MainLayout>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center mb-8">Pricing Plans</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h1 className="mb-8 text-center text-4xl font-bold">Pricing Plans</h1>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {pricingPlans.map((plan) => (
             <div
               key={plan.name}
-              className="border rounded-lg p-6 hover:shadow-lg transition-shadow"
+              className="rounded-lg border p-6 transition-shadow hover:shadow-lg"
             >
-              <h2 className="text-2xl font-bold mb-4">{plan.name}</h2>
-              <p className="text-3xl font-bold mb-4">₹{plan.price}</p>
-              <ul className="space-y-2 mb-6">
+              <h2 className="mb-4 text-2xl font-bold">{plan.name}</h2>
+              <p className="mb-4 text-3xl font-bold">₹{plan.price}</p>
+              <ul className="mb-6 space-y-2">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center">
-                    <Check className="w-5 h-5 text-green-500 mr-2" />
+                    <Check className="mr-2 h-5 w-5 text-green-500" />
                     {feature}
                   </li>
                 ))}
@@ -88,7 +80,7 @@ const PricingPage = () => {
                   setSelectedPackage(plan);
                   setIsPaymentModalOpen(true);
                 }}
-                className="w-full bg-primary text-white py-2 rounded hover:bg-primary/90 transition-colors"
+                className="bg-primary hover:bg-primary/90 w-full rounded py-2 text-white transition-colors"
               >
                 Select Plan
               </button>
@@ -111,4 +103,4 @@ const PricingPage = () => {
   );
 };
 
-export default PricingPage; 
+export default PricingPage;

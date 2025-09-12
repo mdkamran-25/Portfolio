@@ -1,0 +1,28 @@
+import { render, screen } from '@testing-library/react';
+
+import { {{pascalCase name}} } from './{{pascalCase name}}';
+
+describe('{{pascalCase name}}', () => {
+  it('renders without crashing', () => {
+    render(<{{pascalCase name}}>Test content</{{pascalCase name}}>);
+    expect(screen.getByText('Test content')).toBeInTheDocument();
+  });
+
+  it('applies custom className', () => {
+    const { container } = render(
+      <{{pascalCase name}} className="custom-class">
+        Test content
+      </{{pascalCase name}}>
+    );
+    expect(container.firstChild).toHaveClass('custom-class');
+  });
+
+  it('forwards props to the underlying element', () => {
+    render(
+      <{{pascalCase name}} data-testid="{{kebabCase name}}-component">
+        Test content
+      </{{pascalCase name}}>
+    );
+    expect(screen.getByTestId('{{kebabCase name}}-component')).toBeInTheDocument();
+  });
+});

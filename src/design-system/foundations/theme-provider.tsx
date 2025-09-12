@@ -6,8 +6,9 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ThemeConfig } from "@/types";
+
 import { tokens } from "@/design-system/tokens";
+import { ThemeConfig } from "@/types";
 
 interface ThemeContextType {
   theme: ThemeConfig;

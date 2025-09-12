@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn, userEvent, within } from "@storybook/test";
+
 import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
@@ -34,6 +36,10 @@ const meta: Meta<typeof Button> = {
     children: {
       control: "text",
       description: "Button content",
+    },
+    onClick: {
+      action: "clicked",
+      description: "Click handler function",
     },
   },
 };
@@ -133,7 +139,7 @@ export const WithIcons: Story = {
 export const Interactive: Story = {
   args: {
     children: "Click me!",
-    onClick: () => alert("Button clicked!"),
+    onClick: fn(),
   },
   parameters: {
     docs: {
@@ -141,6 +147,111 @@ export const Interactive: Story = {
         story: "Interactive button with click handler. Try clicking it!",
       },
     },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+
+    // Test that button is clickable
+    await expect(button).toBeInTheDocument();
+    await expect(button).toBeEnabled();
+
+    // Test click interaction
+    await userEvent.click(button);
+    await expect(args.onClick).toHaveBeenCalled();
+
+    // Test keyboard interaction
+    await userEvent.keyboard("{Tab}");
+    await expect(button).toHaveFocus();
+
+    await userEvent.keyboard("{Enter}");
+    await expect(args.onClick).toHaveBeenCalledTimes(2);
+  },
+};
+
+export const AccessibilityTest: Story = {
+  args: {
+    children: "Accessible Button",
+    "aria-label": "Close dialog",
+    onClick: fn(),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Testing accessibility features including ARIA attributes and keyboard navigation.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+
+    // Test accessibility attributes
+    await expect(button).toHaveAttribute("aria-label", "Close dialog");
+    await expect(button).toBeInTheDocument();
+
+    // Test keyboard navigation
+    await userEvent.tab();
+    await expect(button).toHaveFocus();
+
+    // Test that button has proper role
+    await expect(button).toHaveAttribute("type", "button");
+  },
+};
+
+export const DisabledInteraction: Story = {
+  args: {
+    children: "Disabled Button",
+    disabled: true,
+    onClick: fn(),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Testing that disabled buttons don't trigger click events.",
+      },
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+
+    // Test that button is disabled
+    await expect(button).toBeDisabled();
+
+    // Test that clicking disabled button doesn't call onClick
+    await userEvent.click(button);
+    await expect(args.onClick).not.toHaveBeenCalled();
+  },
+};
+
+export const LoadingStateTest: Story = {
+  args: {
+    children: "Loading Button",
+    loading: true,
+    onClick: fn(),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Testing loading state behavior and interaction blocking.",
+      },
+    },
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+
+    // Test that loading button is disabled
+    await expect(button).toBeDisabled();
+
+    // Test that loading spinner is present
+    const spinner = canvas.getByTestId("button-spinner");
+    await expect(spinner).toBeInTheDocument();
+
+    // Test that clicking loading button doesn't call onClick
+    await userEvent.click(button);
+    await expect(args.onClick).not.toHaveBeenCalled();
   },
 };
 

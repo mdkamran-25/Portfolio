@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
+import { fontClassNames } from "@/config/fonts";
 import { QueryProvider } from "@/state/providers/QueryProvider";
 
 export const metadata: Metadata = {
@@ -32,8 +34,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-black antialiased">
+    <html lang="en" className={fontClassNames}>
+      <body className="bg-black font-sans antialiased">
+        {/* Using font-sans from design tokens */}
         <QueryProvider>
           <WebVitalsReporter />
           {children}

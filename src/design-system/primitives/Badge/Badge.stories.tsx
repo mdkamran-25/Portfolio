@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "@storybook/test";
 
 import { Badge } from "./Badge";
 
@@ -119,5 +120,76 @@ export const Interactive: Story = {
         story: "Badges include hover and focus states for accessibility.",
       },
     },
+  },
+};
+
+export const AccessibilityTest: Story = {
+  args: {
+    children: "Accessible Badge",
+    variant: "tech",
+    techName: "React",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Testing badge accessibility and tech color generation.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const badge = canvas.getByText("Accessible Badge");
+
+    // Test that badge is rendered correctly
+    await expect(badge).toBeInTheDocument();
+
+    // Test that tech variant has proper styling
+    await expect(badge).toHaveClass("bg-");
+
+    // Test that badge content is accessible
+    await expect(badge).toBeVisible();
+  },
+};
+
+export const VariantValidation: Story = {
+  args: {
+    children: "Test Badge",
+  },
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="default">Default</Badge>
+      <Badge variant="primary">Primary</Badge>
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="error">Error</Badge>
+      <Badge variant="tech" techName="TypeScript">
+        TypeScript
+      </Badge>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: "All badge variants with automated testing.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Test all variants are rendered
+    const badges = [
+      canvas.getByText("Default"),
+      canvas.getByText("Primary"),
+      canvas.getByText("Success"),
+      canvas.getByText("Warning"),
+      canvas.getByText("Error"),
+      canvas.getByText("TypeScript"),
+    ];
+
+    for (const badge of badges) {
+      await expect(badge).toBeInTheDocument();
+      await expect(badge).toBeVisible();
+    }
   },
 };

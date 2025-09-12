@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import Link from "next/link";
-import { RazorpayPayment } from "@/components/RazorpayPayment";
+import React, { useState } from "react";
+
+import { RazorpayPaymentDynamic as RazorpayPayment } from "@/components/RazorpayPayment.dynamic";
 import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
 
 const Footer = () => {
@@ -56,7 +57,7 @@ const Footer = () => {
   return (
     <footer className="w-full pt-8">
       <div className="mx-auto max-w-6xl">
-        <div className="rounded-2xl bg-neutral-900/50 p-4 sm:p-6">
+        <div className="bg-neutral-900/50 rounded-2xl p-4 sm:p-6">
           <div className="container mx-auto">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               {/* Company Info */}

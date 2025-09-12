@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
+
 import { FreelanceProject, freelanceProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
 

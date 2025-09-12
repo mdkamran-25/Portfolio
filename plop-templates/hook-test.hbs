@@ -1,0 +1,44 @@
+import { renderHook, act } from '@testing-library/react';
+
+import { use{{pascalCase name}} } from '../use{{pascalCase name}}';
+
+describe('use{{pascalCase name}}', () => {
+  it('initializes with correct default values', () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    expect(result.current.data).toBeNull();
+    expect(result.current.loading).toBe(true); // Usually starts loading
+    expect(result.current.error).toBeNull();
+    expect(typeof result.current.initialize).toBe('function');
+  });
+
+  it('handles initialization correctly', async () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    await act(async () => {
+      await result.current.initialize();
+    });
+    
+    expect(result.current.loading).toBe(false);
+    expect(result.current.data).toBeDefined();
+  });
+
+  it('handles errors correctly', async () => {
+    // Mock implementation that throws error
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    // Add error simulation and testing here
+    // Example: mock dependencies to throw errors
+  });
+
+  // Add more hook-specific tests here
+  it('performs actions correctly', async () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    
+    await act(async () => {
+      // Test hook actions
+    });
+    
+    // Add assertions for action results
+  });
+});

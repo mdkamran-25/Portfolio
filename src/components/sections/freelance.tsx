@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
 import { Coffee, Star } from "lucide-react";
-import { RazorpayPayment } from "@/components/RazorpayPayment";
-import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
+import React, { useState } from "react";
+
+import { RazorpayPaymentDynamic as RazorpayPayment } from "@/components/RazorpayPayment.dynamic";
 import { freelanceProjects } from "@/constants/projects";
+import type { RazorpayResponse, RazorpayError } from "@/types/razorpay";
 
 const Freelance = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);

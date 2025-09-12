@@ -1,6 +1,6 @@
-import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { clsx } from "clsx";
+import React from "react";
 
 import { getTechColor } from "@/design-system/tokens/tech-colors";
 

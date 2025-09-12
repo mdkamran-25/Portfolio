@@ -1,0 +1,8 @@
+export { {{pascalCase name}}, default } from './components/{{pascalCase name}}';
+{{#if withState}}
+export { use{{pascalCase name}}Store } from './store/{{camelCase name}}.store';
+{{/if}}
+{{#if withApi}}
+export { {{pascalCase name}}Service } from './services/{{camelCase name}}.service';
+{{/if}}
+export type * from './types';

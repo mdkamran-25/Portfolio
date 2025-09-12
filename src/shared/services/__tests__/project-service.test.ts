@@ -3,12 +3,13 @@
  */
 
 import { describe, test, expect, beforeEach, vi } from "vitest";
-import { ProjectService, FreelanceProjectService, ServiceFactory } from "../project-service";
+
 import { Project, FreelanceProject } from "../../domain/models";
 import {
   IProjectRepository,
   IFreelanceProjectRepository,
 } from "../../repositories/project-repository";
+import { ProjectService, FreelanceProjectService, ServiceFactory } from "../project-service";
 
 // Mock data
 const mockProject: Project = {
@@ -150,9 +151,12 @@ describe("ProjectService", () => {
     });
 
     test("should handle repository errors", async () => {
+      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       vi.spyOn(mockRepository, "getAllProjects").mockRejectedValueOnce(new Error("DB Error"));
 
       await expect(projectService.getAllProjects()).rejects.toThrow("Failed to load projects");
+
+      consoleSpy.mockRestore();
     });
   });
 

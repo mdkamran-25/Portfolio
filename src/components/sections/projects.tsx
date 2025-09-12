@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+
 import { Project, featuredProjects } from "@/constants/projects";
 import { ThemeType, getThemeColors } from "@/constants/theme";
 

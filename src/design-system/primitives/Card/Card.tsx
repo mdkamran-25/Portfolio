@@ -3,8 +3,9 @@
  * A flexible container component for grouping related content
  */
 
-import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
+
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva("rounded-lg border bg-card text-card-foreground shadow-sm", {

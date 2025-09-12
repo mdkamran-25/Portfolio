@@ -3,12 +3,13 @@
  */
 
 import { describe, test, expect, beforeEach } from "vitest";
-import { ProjectService, FreelanceProjectService, ServiceFactory } from "../project-service";
+
 import { Project, FreelanceProject } from "../../domain/models";
 import {
   IProjectRepository,
   IFreelanceProjectRepository,
 } from "../../repositories/project-repository";
+import { ProjectService, FreelanceProjectService, ServiceFactory } from "../project-service";
 
 // Simple mock implementations for testing
 class SimpleProjectRepository implements IProjectRepository {
